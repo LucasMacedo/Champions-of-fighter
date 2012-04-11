@@ -19,18 +19,18 @@ public class Imagem {
             count++;
 
             if(count == MAX_COUNT) {
-                throw new Exception("Imagem \""+filename+"\" não pode ser carregada");
+                throw new Exception("Imagem \""+filename+"\" nï¿½o pode ser carregada");
             }
         }        
     }
 
     // Gets the Width of this sprite
-	public int pegaLargura() {
+	public int getWidth() {
 		return image.getWidth(null);
 	}
 
 	// Gets the Height of this sprite
-	public int pegaAltura() {
+	public int getHeight() {
 		return image.getHeight(null);
 	}
 

@@ -16,8 +16,8 @@ public abstract class GameObject {
     protected int x;
     protected int y;
 
-    protected int altura;
-    protected int largura;
+    protected int height;
+    protected int width;
 
     public abstract void step(long timeElapsed);
     public abstract void draw(Graphics g);
@@ -27,7 +27,7 @@ public abstract class GameObject {
     }
 
     public int getMaxX(){
-        return (this.x + this.largura -1 );
+        return (this.x + this.width -1 );
     }
 
     public void setX(int x) {
@@ -39,27 +39,27 @@ public abstract class GameObject {
     }
 
     public int getMaxY(){
-        return (this.y+this.altura -1);
+        return (this.y+this.height -1);
     }
 
     public void setY(int y) {
         this.y = y;
     }
 
-    public int getAltura() {
-        return altura;
+    public int getHeight() {
+        return height;
     }
 
-    public void setAltura(int altura) {
-        this.altura = altura;
+    public void setHeight(int altura) {
+        this.height = altura;
     }
 
-    public int getLargura() {
-        return largura;
+    public int getWidth() {
+        return width;
     }
 
-    public void setLargura(int largura) {
-        this.largura = largura;
+    public void setWidth(int largura) {
+        this.width = largura;
     }
 
     public Point getPontoCentral(){
@@ -74,12 +74,12 @@ public abstract class GameObject {
     }
 
     public Point getPontoMax(){
-        //O uso do -1 é para melhorar o cálculo da colisão
+        //O uso do -1 ï¿½ para melhorar o cï¿½lculo da colisï¿½o
         return new Point(this.getMaxX() - 1, this.getMaxY() - 1);
     }
 
     public Rectangle getRetangulo() {
-        return new Rectangle(this.x, this.y, this.largura, this.altura);
+        return new Rectangle(this.x, this.y, this.width, this.height);
     }
 
     public boolean temColisao(Rectangle retangulo) {

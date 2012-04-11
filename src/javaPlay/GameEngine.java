@@ -8,7 +8,6 @@ import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Menu;
 import java.util.*;
 
 /**
@@ -21,7 +20,7 @@ public class GameEngine
     private Keyboard keyboard;
 
     //kaleu: N�mero de frames por segundo do jogo.
-	private int framesPerSecond;
+    private int framesPerSecond;
     private long lastTime;
     private long timeElapsed;
 
@@ -163,8 +162,4 @@ public class GameEngine
 		}        
 		return false;
 	}
-
-    public void addGameStateController(int i, Menu menu) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
 }

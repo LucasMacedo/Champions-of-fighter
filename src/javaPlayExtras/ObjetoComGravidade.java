@@ -9,7 +9,18 @@ public abstract class ObjetoComGravidade extends GameObject {
 
     protected int yVelocidade = 0;
     protected boolean estaNoChao = false;
-
+    
+    protected int xAnterior;
+    protected int yAnterior;
+    
+    public int getXAnterior(){
+        return this.xAnterior;
+    }
+    
+    public int getYAnterior(){
+        return this.yAnterior;
+    }
+    
     public void step(long timeEllapsed) {
         this.controlePulo();
     }
@@ -36,7 +47,11 @@ public abstract class ObjetoComGravidade extends GameObject {
         this.estaNoChao = true;
         this.yVelocidade = 0;
     }
-
+    
+    public boolean noChao(){
+        return this.estaNoChao;
+    }
+    
     public void saiuChao() {
         this.estaNoChao = false;        
     }       

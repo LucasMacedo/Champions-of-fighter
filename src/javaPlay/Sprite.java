@@ -15,9 +15,13 @@ public class Sprite
 {    
     private Image image;
     private int animFrameCount;
-    private int currAnimFrame;
+    
+    private int currAnimFrameH;
+    private int currAnimFrameV;
+    
     private int animFrameWidth;
     private int animFrameHeight;
+    
     private int MAX_COUNT = 50;
 
     public Sprite(String filename, int animFrameCount, int animFrameWidth,
@@ -34,7 +38,7 @@ public class Sprite
 
             if(count == MAX_COUNT)
             {
-                throw new Exception("Imagem \""+filename+"\" não pode ser carregada");
+                throw new Exception("Imagem \""+filename+"\" nao pode ser carregada");
             }
         }
 
@@ -42,11 +46,24 @@ public class Sprite
         this.animFrameWidth = animFrameWidth;
         this.animFrameHeight = animFrameHeight;
         
-        this.currAnimFrame = 0;
+        this.currAnimFrameH = 0;
+        this.currAnimFrameV = 0;
     }
-
-    public void setCurrAnimFrame(int frame){
-        currAnimFrame = frame - 1;
+    
+    public int getCurrAnimFrameH(){
+        return (currAnimFrameH+1);
+    }
+    
+    public int getCurrAnimFrameV(){
+        return (currAnimFrameV+1);
+    }
+    
+    public void setCurrAnimFrameH(int frame){
+        currAnimFrameH = frame - 1;
+    }
+    
+    public void setCurrAnimFrameV(int frame){
+        currAnimFrameV = frame - 1;
     }
 
     public void draw(Graphics g, int x, int y)
@@ -58,8 +75,18 @@ public class Sprite
         int xpos =  x;
         int ypos =  y;
 
-        g.drawImage(image, xpos, ypos, xpos + animFrameWidth, ypos + animFrameHeight,
-                currAnimFrame * animFrameWidth, 0, (currAnimFrame + 1) * animFrameWidth, animFrameHeight, null);
+        g.drawImage(image, 
+                xpos, ypos, 
+                xpos + animFrameWidth, 
+                ypos + animFrameHeight,
+                
+                currAnimFrameH * animFrameWidth,  
+                currAnimFrameV * animFrameHeight, 
+                
+                (currAnimFrameH + 1) * animFrameWidth, 
+                (currAnimFrameV + 1) * animFrameHeight, 
+                
+                null);
     }   
 
     private Sprite(Image image, int animFrameCount,
@@ -67,14 +94,14 @@ public class Sprite
     {
         this.image = image;
         this.animFrameCount = animFrameCount;
-        this.currAnimFrame = currAnimFrame;
+        this.currAnimFrameH = currAnimFrame;
         this.animFrameWidth = animFrameWidth;
         this.animFrameHeight = animFrameHeight;
     }
 
     public Sprite clone()
     {
-        return new Sprite(image, animFrameCount, currAnimFrame,
+        return new Sprite(image, animFrameCount, currAnimFrameH,
                 animFrameWidth, animFrameHeight);
     }
 }
