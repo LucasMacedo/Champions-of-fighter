@@ -35,8 +35,6 @@ public abstract class Personagem extends ObjetoComGravidade{
     private void mudaImagem(Imagem novaImagem){
         this.imgAtual = novaImagem;
         
-        System.out.println("Muda Imagem: "+novaImagem);
-        
         this.setHeight( this.imgAtual.getHeight() );
         this.setWidth( this.imgAtual.getWidth() );
     }
@@ -97,5 +95,9 @@ public abstract class Personagem extends ObjetoComGravidade{
         if(this.x <= 0){
             this.x = 5;
         }
+    }
+    
+    public void barra(int hp){
+        
     }
 }

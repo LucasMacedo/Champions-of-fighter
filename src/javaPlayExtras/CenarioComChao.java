@@ -35,8 +35,6 @@ public class CenarioComChao {
             while(obj.temColisao(this.chao.get(tamanhoLista).getRetangulo())){
                 obj.setY(obj.getY()-1);
                 
-                System.out.println("X: "+obj.getX()+" Y: "+obj.getY());
-                
                 if(!obj.temColisao(this.chao.get(tamanhoLista).getRetangulo())){
                     tamanhoLista = this.chao.size()-1;
                     houveColisao = true;
@@ -48,6 +46,8 @@ public class CenarioComChao {
         
         if(houveColisao){
             obj.chegouChao();
+        }else{
+            obj.saiuChao();
         }
         
         return obj;
