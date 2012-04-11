@@ -1,6 +1,7 @@
 package Personagens;
 
 import javaPlay.Imagem;
+import javaPlayExtras.BarraStatus;
 import javaPlayExtras.ObjetoComGravidade;
 
 public abstract class Personagem extends ObjetoComGravidade{
@@ -14,15 +15,16 @@ public abstract class Personagem extends ObjetoComGravidade{
     protected Imagem imgAtual;
     protected Imagem imgDefende;
     
-    protected int hp;
-    protected int sp;
+    protected BarraStatus imgBarra;
+    
+    protected int hp = 100;
+    protected int sp = 100;
     
     protected int forcaImpulso;
     
     protected abstract void eventosTeclado();
     protected abstract void load();
     
-
     public void step(long timeEllaped){
         super.step(timeEllaped);
         
@@ -40,7 +42,7 @@ public abstract class Personagem extends ObjetoComGravidade{
     }
     
     public void apanha(){
-        this.x -= 15;
+        this.x -= 20;
         this.hp -= 10;
         
         this.mudaImagem(this.imgApanha);
@@ -60,6 +62,8 @@ public abstract class Personagem extends ObjetoComGravidade{
         if( this.estaSubindo() || this.estaDescendo() ){
             return;
         }
+        this.hp -= 10;
+        this.sp -= 20;
         
         this.impulso(this.forcaImpulso);
         this.mudaImagem(this.imgPula);
@@ -95,9 +99,5 @@ public abstract class Personagem extends ObjetoComGravidade{
         if(this.x <= 0){
             this.x = 5;
         }
-    }
-    
-    public void barra(int hp){
-        
     }
 }

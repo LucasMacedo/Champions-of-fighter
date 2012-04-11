@@ -1,11 +1,11 @@
 package Personagens;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import javaPlay.GameEngine;
 import javaPlay.Imagem;
 import javaPlay.Keyboard;
 import javaPlay.Keys;
+import javaPlayExtras.BarraStatus;
 import javax.swing.JOptionPane;
 
 public class Jogador extends Personagem{
@@ -56,6 +56,8 @@ public class Jogador extends Personagem{
             
             this.imgPula    = new Imagem("resources/personagem/pula.png");
             this.imgDefende = new Imagem("resources/personagem/haduken.png");
+            
+            this.imgBarra   = new BarraStatus("resources/personagem/barra.png", 300, 100);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
@@ -76,6 +78,7 @@ public class Jogador extends Personagem{
         this.imgAtual.draw(g, this.x, this.y);
         
         g.drawRect(this.x, this.y, this.imgAtual.getWidth(), this.imgAtual.getHeight());
+        this.imgBarra.draw(g, this.hp, this.sp);
     }
     
 }
