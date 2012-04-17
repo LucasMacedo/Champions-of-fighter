@@ -2,17 +2,11 @@ package javaPlayExtras;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import javaPlay.GameObject;
 import javaPlay.Imagem;
-import javax.swing.JOptionPane;
 
-public class BarraStatus {
+public class BarraStatus extends GameObject{
     private Imagem barra;
-    
-    private int width;
-    private int height;
-    
-    private int x;
-    private int y;
     
     public BarraStatus(String diretorio, int x, int y){
         try {
@@ -21,14 +15,20 @@ public class BarraStatus {
             this.width = this.barra.getWidth();
             this.height = this.barra.getHeight();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: "+e);
+            //JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
         
         this.x = x;
         this.y = y;
     }
     
-    public void draw(Graphics g, int hp, int sp){
+    public void setStatus(double hp, double sp){
+        this.hp = hp;
+        this.sp = sp;
+    }
+    
+    @Override
+    public void draw(Graphics g){
         
         //this.barra.draw(g, this.x, this.y);
         
@@ -40,10 +40,10 @@ public class BarraStatus {
         
         // Barra HP
         g.setColor(Color.red);
-        g.fillRect(this.x, this.y, hp*2, 20);
+        g.fillRect(this.x, this.y, (int)hp*2, 20);
         // Barra SP
         g.setColor(Color.blue);
-        g.fillRect(this.x, this.y+30, sp, 20);
+        g.fillRect(this.x, this.y+30, (int)sp, 20);
         
         /*
         g.setColor(Color.white);
@@ -52,4 +52,8 @@ public class BarraStatus {
         g.fillRect((100-hp)+this.x, this.y, hp, 20);
         */
     }
+
+    @Override
+    public void step(long timeElapsed) {}
+
 }

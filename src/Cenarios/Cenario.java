@@ -1,63 +1,90 @@
 package Cenarios;
 
-import java.util.ArrayList;
+import javaPlayExtras.GeraCenario;
+import Personagens.Jogador;
+import Personagens.Inimigo;
+import java.awt.Graphics;
+import javaPlay.GameStateController;
+import javaPlay.Imagem;
+import javaPlayExtras.ObjetoComGravidade;
 import javax.swing.JOptionPane;
 
-public abstract class Cenario {
-    protected int cenario[][];
-    protected ArrayList<String> posicao;
-    protected String lista[];
+public class Cenario implements GameStateController{
+    private GeraCenario cenarioComParede;
     
-    protected void geraPosicoes() {
-        int x = 0;
-        int y = 0;
+    private Imagem fundoMario;
+    private Imagem fundoInimigo2;
+    private Imagem fundoInimigo3;
+    private Imagem fundoInimigo4;
+    private Imagem fundoInimigo5;
+    private Imagem fundoInimigo6;
+    private Imagem fundoInimigo7;
+    private Imagem fundoInimigo8;
+    
+    Jogador jogador;
+    Inimigo inimigo;
+    
+    public Cenario(Jogador jogador, Inimigo inimigo){
+        this.jogador = jogador;
+        this.inimigo = inimigo;
         
-        int width = 32;
-        int height = 32;
+        this.cenarioComParede = new GeraCenario();
         
-        String posicao;
-        
-        while(y < 18){
-            while(x < 25){
-                posicao = "";
-                
-                if(this.cenario[y][x] > 0){
-                    if((x*width) == 0             ){posicao += "000";}
-                    if((x*width) < 10   && (x*width) > 0  ){posicao += "00"+(x*width);}
-                    if((x*width) >= 10  && (x*width) < 100){posicao += "0"+(x*width);}
-                    if((x*width) >= 100           ){posicao += ""+(x*width);}
-                    
-                    posicao += ",";
-                    
-                    if((y*height+23) == 0             ){posicao += "000";}
-                    if((y*height+23) < 10   && (y*height+23) > 0  ){posicao += "00"+(y*height+23);}
-                    if((y*height+23) >= 10  && (y*height+23) < 100){posicao += "0"+(y*height+23);}
-                    if((y*height+23) >= 100           ){posicao += ""+(y*height+23);}
-                    
-                    posicao += ","+this.cenario[y][x];
-                    this.posicao.add(posicao);
-                }
-                x ++;
-            }
-            x = 0;
-            y ++;
+        try {
+            this.fundoMario    = new Imagem("resources/cenario1/fundo.jpg");
+            this.fundoInimigo2 = new Imagem("resources/cenario1/fundo.jpg");
+            this.fundoInimigo3 = new Imagem("resources/cenario1/fundo.jpg");
+            this.fundoInimigo4 = new Imagem("resources/cenario1/fundo.jpg");
+            this.fundoInimigo5 = new Imagem("resources/cenario1/fundo.jpg");
+            this.fundoInimigo6 = new Imagem("resources/cenario1/fundo.jpg");
+            this.fundoInimigo7 = new Imagem("resources/cenario1/fundo.jpg");
+            this.fundoInimigo8 = new Imagem("resources/cenario1/fundo.jpg");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar a imagem de fundo: "+e);
         }
     }
     
-    protected void listaImagens(){
-        this.lista = new String[4]; // Inicializa o vetor onde o tamanho corresponde a quantidade de imagens usadas no cenario
+    private void verificaColisao(){
+        ObjetoComGravidade obj1 = this.cenarioComParede.verificaColisao(this.jogador);
+        ObjetoComGravidade obj2 = this.cenarioComParede.verificaColisao(this.inimigo);
         
-        this.lista[0] = "resources/cenario1/chao.png"; // Imagem tipo 1 na matriz
-        this.lista[1] = "resources/cenario1/imagem2.png"; // Imagem tipo 2 na matriz
-        this.lista[2] = "resources/cenario1/imagem3.jpg"; // Imagem tipo 3 na matriz
-        this.lista[3] = "resources/cenario1/imagem4.jpg"; // Imagem tipo 4 na matriz
+        this.jogador.setX(obj1.getX());
+        this.jogador.setY(obj1.getY());
+        if(obj1.noChao()){
+            this.jogador.chegouChao();
+        }
+        
+        this.inimigo.setX(obj2.getX());
+        this.inimigo.setY(obj2.getY());
+        if(obj2.noChao()){
+            this.inimigo.chegouChao();
+        }
     }
     
-    public ArrayList<String> getPosicao(){
-        return this.posicao;
+    @Override
+    public void step(long timeElapsed) {
+        this.jogador.step(timeElapsed);
+        this.inimigo.step(timeElapsed);
+        
+        this.verificaColisao();
     }
     
-    public String[] getListaImagens(){
-        return this.lista;
+    @Override
+    public void draw(Graphics g) {
+        this.fundoMario.draw(g, -134, 0);
+        this.cenarioComParede.draw(g);
+        
+        this.jogador.draw(g);
+        this.inimigo.draw(g);
+        
     }
+    
+    @Override
+    public void load() {}    
+    @Override
+    public void unload() {}
+    @Override
+    public void stop() {}
+    @Override
+    public void start() {}
 }

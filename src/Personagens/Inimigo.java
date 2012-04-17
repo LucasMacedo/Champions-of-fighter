@@ -10,6 +10,11 @@ public class Inimigo extends Personagem{
         
     }
     
+    public void setFaseClassificatoria(int fase){
+        fase ++;
+        this.forca += (this.forca*fase)/5;
+    }
+    
     @Override
     protected void load() {
         try {
@@ -36,6 +41,11 @@ public class Inimigo extends Personagem{
     
     @Override
     public void draw(Graphics g) {
+        
+    }
+
+    @Override
+    protected void executaAudio(String diretorio) {
         
     }
 }

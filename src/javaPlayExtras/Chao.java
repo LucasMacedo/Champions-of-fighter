@@ -1,9 +1,6 @@
 package javaPlayExtras;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javaPlay.GameObject;
 import javaPlay.Imagem;
 import javax.swing.JOptionPane;
@@ -16,12 +13,10 @@ public class Chao extends GameObject{
         this.x = x;
         this.y = y;
         
-        this.width = 32;
-        this.height = 32;
-        
-        //JOptionPane.showMessageDialog(null, lista[imagem-1]);
         try {
             this.imgParede = new Imagem(lista[imagem-1]);
+            this.width = this.imgParede.getWidth();
+            this.height = this.imgParede.getHeight();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro: "+ex);
         }

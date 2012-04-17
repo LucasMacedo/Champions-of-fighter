@@ -2,25 +2,23 @@ package javaPlayExtras;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import javaPlay.GameObject;
 import javax.swing.JOptionPane;
 
-public class CenarioComChao {
-    protected ArrayList<String> posicao;
-    protected ArrayList<Chao> chao;
-    protected ArrayList<ObjetoComGravidade> objeto;
+public class GeraCenario{
+    private TitleMap titleMap;
+    private ArrayList<String> posicao;
+    private ArrayList<Chao> chao;
+    private ArrayList<ObjetoComGravidade> objeto;
     
-    protected String listaImagem[];
+    private String listaImagem[];
     
-    public CenarioComChao(ArrayList<String> posicao, String listaImagem[]){
+    public GeraCenario(){
+        this.titleMap = new TitleMap();
+        
         this.chao = new ArrayList<Chao>();
-        this.posicao = posicao;
-        this.listaImagem = listaImagem;
+        this.posicao = this.titleMap.getPosicao();
+        this.listaImagem = this.titleMap.getListaImagens();
         this.objeto = new ArrayList<ObjetoComGravidade>();
-    }
-    
-    public void addObjeto(ObjetoComGravidade objeto){
-        this.objeto.add(objeto);
     }
     
     public ObjetoComGravidade verificaColisao(ObjetoComGravidade obj){

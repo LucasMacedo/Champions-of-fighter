@@ -6,7 +6,6 @@ import javaPlay.Imagem;
 import javaPlay.Keyboard;
 import javaPlay.Keys;
 import javaPlayExtras.BarraStatus;
-import javax.swing.JOptionPane;
 
 public class Jogador extends Personagem{
     
@@ -42,6 +41,8 @@ public class Jogador extends Personagem{
     
     @Override
     protected void load() {
+        
+        
         try {
             this.imgApanha  = new Imagem("resources/personagem/apanha.png");
             this.imgBate    = new Imagem("resources/personagem/soco.png");
@@ -52,17 +53,20 @@ public class Jogador extends Personagem{
             this.imgTras    = new Imagem("resources/personagem/normal.png");
             
             this.imgNormal  = new Imagem("resources/personagem/normal.png");
-            this.imgMorto   = new Imagem("resources/personagem/normal.png");
+            this.imgMorto   = new Imagem("resources/personagem/haduken.png");
             
             this.imgPula    = new Imagem("resources/personagem/pula.png");
             this.imgDefende = new Imagem("resources/personagem/haduken.png");
             
             this.imgBarra   = new BarraStatus("resources/personagem/barra.png", 300, 100);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: "+e);
+            //JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
         
         this.forcaImpulso = 38;
+        
+        this.hp = 100;
+        this.sp = 100;
         
         this.x = 50;
         this.y = 50;
@@ -78,7 +82,13 @@ public class Jogador extends Personagem{
         this.imgAtual.draw(g, this.x, this.y);
         
         g.drawRect(this.x, this.y, this.imgAtual.getWidth(), this.imgAtual.getHeight());
-        this.imgBarra.draw(g, this.hp, this.sp);
+        this.imgBarra.setStatus(this.hp, this.sp);
+        this.imgBarra.draw(g);
+    }
+
+    @Override
+    protected void executaAudio(String diretorio) {
+        
     }
     
 }

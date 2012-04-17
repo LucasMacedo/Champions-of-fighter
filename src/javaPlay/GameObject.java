@@ -18,7 +18,10 @@ public abstract class GameObject {
 
     protected int height;
     protected int width;
-
+    
+    protected double hp;
+    protected double sp;
+    
     public abstract void step(long timeElapsed);
     public abstract void draw(Graphics g);
 

@@ -1,6 +1,5 @@
 package javaPlayExtras;
 
-import java.awt.Rectangle;
 import javaPlay.GameObject;
 
 public abstract class ObjetoComGravidade extends GameObject {
