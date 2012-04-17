@@ -1,6 +1,7 @@
 package Principal;
 
 import Cenarios.Cenario;
+import Cenarios.Menu;
 import Personagens.*;
 import javaPlay.GameEngine;
 import javaPlayExtras.AudioPlayer;
@@ -11,6 +12,7 @@ public class Main{
         Jogador jogador = new Jogador();
         Inimigo inimigo = new Inimigo();
         
+        GameEngine.getInstance().addGameStateController(0, new Menu());
         GameEngine.getInstance().addGameStateController(1, new Cenario(jogador, inimigo));
     
         GameEngine.getInstance().setStartingGameStateController(1);
