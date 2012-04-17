@@ -15,15 +15,15 @@ public class MenuStart implements GameStateController {
     
             
     public MenuStart(){
-        try{
-            this.Campeonato = new Imagem ("");
-            this.Arcade = new Imagem("");
-            this.Exit = new Imagem ("");
-            this.Fundo = new Imagem("");
+        //try{
+            //this.Campeonato = new Imagem ("");
+            //this.Arcade = new Imagem("");
+            //this.Exit = new Imagem ("");
+            //this.Fundo = new Imagem("");
             
-        }catch(Exception e){
-        JOptionPane.showMessageDialog(null, "Erro ao carregar a imagem de fundo: "+e);
-       }
+        //}catch(Exception e){
+        //JOptionPane.showMessageDialog(null, "Erro ao carregar a imagem de fundo: "+e);
+       //}
     }
 
     @Override
@@ -37,10 +37,10 @@ public class MenuStart implements GameStateController {
 
     @Override
     public void draw(Graphics g) {
-       this.Fundo.draw(g, 800, 600); 
-       this.Arcade.draw(g, 0, 0);
-       this.Campeonato.draw(g, 0, 0);
-       this.Exit.draw(g, 0, 0);
+       //this.Fundo.draw(g, 800, 600); 
+       //this.Arcade.draw(g, 0, 0);
+       //this.Campeonato.draw(g, 0, 0);
+       //this.Exit.draw(g, 0, 0);
     
     }
     
