@@ -65,13 +65,34 @@ public class Sprite
     public void setCurrAnimFrameV(int frame){
         currAnimFrameV = frame - 1;
     }
+    
+    
+    
+    public void setAnimFrameWidth(int width){
+        animFrameWidth = width;
+    }
+    
+    public void setAnimFrameHeight(int height){
+        animFrameWidth = height;
+    }
+    
+    public int getAnimFrameWidth(){
+        return animFrameWidth;
+    }
+    
+    public int getAnimFrameHeight(){
+        return animFrameWidth;
+    }
 
+    
+    
     public void draw(Graphics g, int x, int y)
     {
         GameCanvas canvas = GameEngine.getInstance().getGameCanvas();
 
         //int xpos = canvas.getRenderScreenStartX() + x;
         //int ypos = canvas.getRenderScreenStartY() + y;
+        
         int xpos =  x;
         int ypos =  y;
 

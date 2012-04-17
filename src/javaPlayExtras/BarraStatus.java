@@ -51,6 +51,7 @@ public class BarraStatus extends GameObject{
         g.setColor(Color.red);
         g.fillRect((100-hp)+this.x, this.y, hp, 20);
         */
+        
     }
 
     @Override

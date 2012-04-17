@@ -4,7 +4,12 @@ import java.awt.Graphics;
 import javaPlay.Imagem;
 
 public class Inimigo extends Personagem{
-
+    
+    public Inimigo(){
+        super.load();
+        this.load();
+    }
+    
     @Override
     protected void eventosTeclado() {
         
@@ -30,7 +35,7 @@ public class Inimigo extends Personagem{
             this.imgMorto   = new Imagem("resources/personagem/imagem.png");
             
             this.imgPula    = new Imagem("resources/personagem/imagem.png");
-            this.imgDefende = new Imagem("resources/personagem/imagem.png");
+            this.imgEspecial = new Imagem("resources/personagem/imagem.png");
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(null, "Erro: "+e);
         }

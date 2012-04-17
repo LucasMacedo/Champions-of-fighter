@@ -44,7 +44,7 @@ public class Cenario implements GameStateController{
         }
     }
     
-    private void verificaColisao(){
+    private void verificaColisao(long timeElapsed){
         ObjetoComGravidade obj1 = this.cenarioComParede.verificaColisao(this.jogador);
         ObjetoComGravidade obj2 = this.cenarioComParede.verificaColisao(this.inimigo);
         
@@ -59,6 +59,9 @@ public class Cenario implements GameStateController{
         if(obj2.noChao()){
             this.inimigo.chegouChao();
         }
+        
+        this.inimigo.colisaoTiro(obj1);
+        this.jogador.colisaoTiro(obj2);
     }
     
     @Override
@@ -66,7 +69,7 @@ public class Cenario implements GameStateController{
         this.jogador.step(timeElapsed);
         this.inimigo.step(timeElapsed);
         
-        this.verificaColisao();
+        this.verificaColisao(timeElapsed);
     }
     
     @Override

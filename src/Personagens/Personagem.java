@@ -3,6 +3,7 @@ package Personagens;
 import javaPlay.Imagem;
 import javaPlayExtras.BarraStatus;
 import javaPlayExtras.ObjetoComGravidade;
+import javaPlayExtras.Tiro;
 
 public abstract class Personagem extends ObjetoComGravidade{
     protected Imagem imgPula;
@@ -13,18 +14,27 @@ public abstract class Personagem extends ObjetoComGravidade{
     protected Imagem imgMorto;
     protected Imagem imgNormal;
     protected Imagem imgAtual;
-    protected Imagem imgDefende;
+    protected Imagem imgEspecial;
     
+    protected Tiro tiro;
     protected BarraStatus imgBarra;
+    
+    protected String viradoPra;
     
     protected double forca = 25;
     protected double inteligencia = 70;
     
     protected int forcaImpulso;
     
+    protected int cont = 0;
+    
     protected abstract void eventosTeclado();
-    protected abstract void load();
     protected abstract void executaAudio(String diretorio);
+    
+    protected void load(){
+        this.forcaImpulso = 38;
+        this.tiro = new Tiro();
+    }
     
     public void step(long timeEllaped){
         super.step(timeEllaped);
@@ -34,6 +44,10 @@ public abstract class Personagem extends ObjetoComGravidade{
             return;
         }
         this.eventosTeclado();
+    }
+    
+    public void existeTiro(){
+        
     }
     
     private void mudaImagem(Imagem novaImagem){
@@ -74,13 +88,24 @@ public abstract class Personagem extends ObjetoComGravidade{
         this.executaAudio("pula");
     }
     
-    public void defende(){
-        this.mudaImagem(this.imgDefende);
-        this.executaAudio("defende");
+    public void especial(){
+        if(sp > 0 && !this.tiro.getExiste()){
+            this.mudaImagem(this.imgEspecial);
+            this.tiro = new Tiro(this.x, this.y, this.width, this.height, this.viradoPra);
+            this.executaAudio("defende");
+            //sp = 0;
+        }else{
+            this.cont ++;
+            if(this.cont >= 12){
+                this.normal();
+                this.cont = 0;
+            }
+        }
     }
     
     public void andaFrente(){
         this.x += 13;
+        this.viradoPra = "frente";
         this.mudaImagem(this.imgFrente);
     }
     
@@ -88,6 +113,7 @@ public abstract class Personagem extends ObjetoComGravidade{
         this.x -= 13;
         
         this.mudaImagem(this.imgTras);
+        this.viradoPra = "tras";
     }
     
     public void normal(){
@@ -105,5 +131,9 @@ public abstract class Personagem extends ObjetoComGravidade{
         if(this.x <= 3){
             this.x = 3;
         }
+    }
+    
+    public void colisaoTiro(ObjetoComGravidade obj){        
+        this.tiro.colisao(obj);
     }
 }
