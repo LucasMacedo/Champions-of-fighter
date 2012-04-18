@@ -19,7 +19,7 @@ public class Main{
         GameEngine.getInstance().addGameStateController(3, new Rank());
         GameEngine.getInstance().addGameStateController(4, new Cenario(jogador, inimigo));
     
-        GameEngine.getInstance().setStartingGameStateController(3);
+        GameEngine.getInstance().setStartingGameStateController(4);
 
         //Executa um som ".wav" .mp3 não funciona
         //AudioPlayer.play("resources/bgm/fundo.wav", true);
