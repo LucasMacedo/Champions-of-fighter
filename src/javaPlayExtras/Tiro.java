@@ -18,16 +18,36 @@ public class Tiro extends GameObject{
     private boolean existeColisao;
     private Imagem tiro;
     
-    String viradoPra;
-    
+    private String personagem;
     
     public Tiro(){
         this.height = 0;
         this.width = 0;
         
-        this.x = 0;
-        this.y = 0;
+        this.x = -10;
+        this.y = -10;
         
+        this.personagem = "personagem";
+        
+        this.iniciaTiro();
+    }
+    
+    public Tiro(int posicaoX, int posicaoY, int width, int height, String personagem){
+        if(personagem.equals("inimigo")){
+            this.x = posicaoX-25;
+        }else{
+            this.x = posicaoX+width;
+        }
+        this.y = posicaoY+height/2;
+        
+        this.personagem = personagem;
+        
+        this.existeTiro = true;
+        
+        this.iniciaTiro();
+    }
+    
+    private void iniciaTiro(){
         try {
             this.tiro = new Imagem("resources/personagem/especial.png");
         } catch (Exception e) {
@@ -35,27 +55,8 @@ public class Tiro extends GameObject{
         }
     }
     
-    public Tiro(int posicaoX, int posicaoY, int width, int height, String viradoPra){
-        this.x = posicaoX+width;
-        this.y = posicaoY+height/2;
-        
-        this.viradoPra = viradoPra;
-        this.existeTiro = true;
-        
-        this.height = 29;
-        this.width = 29;
-        
-         try {
-            this.tiro = new Imagem("resources/personagem/especial.png");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro na imagem Tiro: "+e);
-        }
-        
-    }
-    
     public void colisao(ObjetoComGravidade obj){
         this.existeColisao = obj.temColisao(this.getRectangle());
-        //JOptionPane.showMessageDialog(null, this.existeColisao);
     }
     
     private boolean existeColisao(){
@@ -67,8 +68,8 @@ public class Tiro extends GameObject{
     }
     
     private void fimTiro(){
-        this.width = 0;
-        this.height = 0;
+        this.x = -20;
+        this.y = -20;
         
         this.existeTiro = false;
     }
@@ -80,8 +81,12 @@ public class Tiro extends GameObject{
     @Override
     public void step(long timeElapsed) {
         this.timeElapsed += timeElapsed;
-        this.x += 30;
         
+        if(this.personagem.equals("inimigo")){
+            this.x -= 15;
+        }else{
+            this.x += 15;
+        }
         if(this.existeColisao()){
             //Animacao
             
@@ -99,4 +104,7 @@ public class Tiro extends GameObject{
         this.tiro.draw(g, this.x, this.y);
     }
     
+    public void drawFlipped(Graphics g) {
+        this.tiro.drawFlipped(g, this.x, this.y);
+    }
 }

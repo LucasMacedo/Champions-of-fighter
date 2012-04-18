@@ -25,7 +25,7 @@ public class Jogador extends Personagem{
         }
         // Tecla DOWN
         if(key.keyDown(Keys.S)){
-            this.especial();
+            this.especial("jogador");
         }
         // Tecla LEFT
         if(key.keyDown(Keys.A)){
@@ -60,13 +60,10 @@ public class Jogador extends Personagem{
             this.imgPula    = new Imagem("resources/personagem/pula.png");
             this.imgEspecial = new Imagem("resources/personagem/haduken.png");
             
-            this.imgBarra   = new BarraStatus("resources/personagem/barra.png", 300, 100);
+            this.imgBarra   = new BarraStatus("resources/personagem/barra.png", 15, 30);
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
-        
-        this.hp = 100;
-        this.sp = 100;
         
         this.x = 50;
         this.y = 400;
@@ -84,12 +81,12 @@ public class Jogador extends Personagem{
     public void draw(Graphics g) {
         this.imgAtual.draw(g, this.x, this.y);
         
-        g.drawRect(this.x, this.y, this.imgAtual.getWidth(), this.imgAtual.getHeight());
+        //g.drawRect(this.x, this.y, this.imgAtual.getWidth(), this.imgAtual.getHeight());
         this.imgBarra.setStatus(this.hp, this.sp);
         this.imgBarra.draw(g);
         this.tiro.draw(g);
     }
-
+    
     @Override
     protected void executaAudio(String diretorio) {
         

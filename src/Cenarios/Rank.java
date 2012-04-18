@@ -14,9 +14,9 @@ public class Rank implements GameStateController{
     
     public Rank() {
         try{
-        //this.fundo = new Imagem("");
-        //this.Exit = new Imagem("");
-        this.rank = new Imagem ("resources/Menu/Rank.png");
+            //this.fundo = new Imagem("");
+            //this.Exit = new Imagem("");
+            this.rank = new Imagem ("resources/Menu/Rank.png");
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, "Erro ao carregar a imagem de fundo: "+e);
         }

@@ -19,13 +19,10 @@ public abstract class Personagem extends ObjetoComGravidade{
     protected Tiro tiro;
     protected BarraStatus imgBarra;
     
-    protected String viradoPra;
-    
     protected double forca = 25;
     protected double inteligencia = 70;
     
     protected int forcaImpulso;
-    
     protected int cont = 0;
     
     protected abstract void eventosTeclado();
@@ -34,6 +31,8 @@ public abstract class Personagem extends ObjetoComGravidade{
     protected void load(){
         this.forcaImpulso = 38;
         this.tiro = new Tiro();
+        this.hp = 150;
+        this.sp = 130;
     }
     
     public void step(long timeEllaped){
@@ -88,16 +87,16 @@ public abstract class Personagem extends ObjetoComGravidade{
         this.executaAudio("pula");
     }
     
-    public void especial(){
+    public void especial(String personagem){
         if(sp > 0 && !this.tiro.getExiste()){
             this.mudaImagem(this.imgEspecial);
-            this.tiro = new Tiro(this.x, this.y, this.width, this.height, this.viradoPra);
+            this.tiro = new Tiro(this.x, this.y, this.width, this.height, personagem);
             this.executaAudio("defende");
             //sp = 0;
         }else{
             this.cont ++;
             if(this.cont >= 12){
-                this.normal();
+                this.normal();                
                 this.cont = 0;
             }
         }
@@ -105,7 +104,6 @@ public abstract class Personagem extends ObjetoComGravidade{
     
     public void andaFrente(){
         this.x += 13;
-        this.viradoPra = "frente";
         this.mudaImagem(this.imgFrente);
     }
     
@@ -113,7 +111,6 @@ public abstract class Personagem extends ObjetoComGravidade{
         this.x -= 13;
         
         this.mudaImagem(this.imgTras);
-        this.viradoPra = "tras";
     }
     
     public void normal(){
