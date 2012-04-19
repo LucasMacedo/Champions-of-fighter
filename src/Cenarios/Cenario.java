@@ -12,36 +12,16 @@ import javax.swing.JOptionPane;
 public class Cenario implements GameStateController{
     private GeraCenario cenarioComParede;
     
-    private Imagem fundoMario;
-    private Imagem fundoInimigo2;
-    private Imagem fundoInimigo3;
-    private Imagem fundoInimigo4;
-    private Imagem fundoInimigo5;
-    private Imagem fundoInimigo6;
-    private Imagem fundoInimigo7;
-    private Imagem fundoInimigo8;
+    private Imagem fundoAtual;
     
     Jogador jogador;
     Inimigo inimigo;
     
-    public Cenario(Jogador jogador, Inimigo inimigo){
-        this.jogador = jogador;
-        this.inimigo = inimigo;
+    public Cenario(){
+        this.jogador = new Jogador();
         
         this.cenarioComParede = new GeraCenario();
-        
-        try {
-            this.fundoMario    = new Imagem("resources/cenario1/fundo.jpg");
-            this.fundoInimigo2 = new Imagem("resources/cenario1/fundo.jpg");
-            this.fundoInimigo3 = new Imagem("resources/cenario1/fundo.jpg");
-            this.fundoInimigo4 = new Imagem("resources/cenario1/fundo.jpg");
-            this.fundoInimigo5 = new Imagem("resources/cenario1/fundo.jpg");
-            this.fundoInimigo6 = new Imagem("resources/cenario1/fundo.jpg");
-            this.fundoInimigo7 = new Imagem("resources/cenario1/fundo.jpg");
-            this.fundoInimigo8 = new Imagem("resources/cenario1/fundo.jpg");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar a imagem de fundo: "+e);
-        }
+        this.load();
     }
     
     private void verificaColisao(long timeElapsed){
@@ -64,6 +44,11 @@ public class Cenario implements GameStateController{
         this.jogador.colisaoTiro(obj2);
     }
     
+    public void setInimigo(Imagem imgAtual, Inimigo inimigo){
+        this.fundoAtual = imgAtual;
+        this.inimigo = inimigo;
+    }
+    
     @Override
     public void step(long timeElapsed) {
         this.jogador.step(timeElapsed);
@@ -74,12 +59,11 @@ public class Cenario implements GameStateController{
     
     @Override
     public void draw(Graphics g) {
-        this.fundoMario.draw(g, -134, 0);
+        this.fundoAtual.draw(g, 0, 2);
         this.cenarioComParede.draw(g);
         
-        this.jogador.draw(g);
         this.inimigo.draw(g);
-        
+        this.jogador.draw(g);
     }
     
     @Override

@@ -1,6 +1,7 @@
 package Personagens;
 
 import javaPlay.Imagem;
+import javaPlayExtras.AudioPlayer;
 import javaPlayExtras.BarraStatus;
 import javaPlayExtras.ObjetoComGravidade;
 import javaPlayExtras.Tiro;
@@ -26,13 +27,12 @@ public abstract class Personagem extends ObjetoComGravidade{
     protected int cont = 0;
     
     protected abstract void eventosTeclado();
-    protected abstract void executaAudio(String diretorio);
     
     protected void load(){
         this.forcaImpulso = 38;
         this.tiro = new Tiro();
-        this.hp = 150;
-        this.sp = 130;
+        this.hp = 144;
+        this.sp = 87;
     }
     
     public void step(long timeEllaped){
@@ -44,11 +44,6 @@ public abstract class Personagem extends ObjetoComGravidade{
         }
         this.eventosTeclado();
     }
-    
-    public void existeTiro(){
-        
-    }
-    
     private void mudaImagem(Imagem novaImagem){
         this.imgAtual = novaImagem;
         
@@ -61,19 +56,18 @@ public abstract class Personagem extends ObjetoComGravidade{
         this.hp -= 10;
         
         this.mudaImagem(this.imgApanha);
+        //AudioPlayer.play("resources/som/apanha.wav", true);
     }
     
     public void bate(){
         this.sp += 5;
         
         this.mudaImagem(this.imgBate);
-        this.executaAudio("bate");
     }
     
     private void morre(){
         //this.mudaImagem(this.imgMorto);
         //System.out.println("Morreu");
-        this.executaAudio("morre");
     }
     
     public void pula(){
@@ -84,14 +78,12 @@ public abstract class Personagem extends ObjetoComGravidade{
         
         this.impulso(this.forcaImpulso);
         this.mudaImagem(this.imgPula);
-        this.executaAudio("pula");
     }
     
     public void especial(String personagem){
         if(sp > 0 && !this.tiro.getExiste()){
             this.mudaImagem(this.imgEspecial);
             this.tiro = new Tiro(this.x, this.y, this.width, this.height, personagem);
-            this.executaAudio("defende");
             //sp = 0;
         }else{
             this.cont ++;

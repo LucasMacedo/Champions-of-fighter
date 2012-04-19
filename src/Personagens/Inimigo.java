@@ -1,5 +1,6 @@
 package Personagens;
 
+import javaPlayExtras.Enum;
 import java.awt.Graphics;
 import javaPlay.GameEngine;
 import javaPlay.Imagem;
@@ -9,11 +10,13 @@ import javaPlayExtras.BarraStatus;
 
 public class Inimigo extends Personagem{
     
-    String tipoInimigo;
+    Enum tipoInimigo;
     
-    public Inimigo(){
+    public Inimigo(Enum tipoInimigo){
         super.load();
         this.load();
+        
+        this.tipoInimigo = tipoInimigo;
     }
     
     @Override
@@ -60,7 +63,7 @@ public class Inimigo extends Personagem{
             this.imgPula    = new Imagem("resources/personagem/pula.png");
             this.imgEspecial = new Imagem("resources/personagem/haduken.png");
             
-            this.imgBarra   = new BarraStatus("resources/personagem/barra.png", 415, 30);
+            this.imgBarra   = new BarraStatus("resources/personagem/barra.png", 370, 30);
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
@@ -85,10 +88,5 @@ public class Inimigo extends Personagem{
         this.imgBarra.setStatus(this.hp, this.sp);
         this.imgBarra.drawFlipped(g);
         this.tiro.drawFlipped(g);
-    }
-    
-    @Override
-    protected void executaAudio(String diretorio) {
-        
     }
 }

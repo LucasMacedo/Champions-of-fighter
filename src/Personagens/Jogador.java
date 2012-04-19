@@ -60,7 +60,7 @@ public class Jogador extends Personagem{
             this.imgPula    = new Imagem("resources/personagem/pula.png");
             this.imgEspecial = new Imagem("resources/personagem/haduken.png");
             
-            this.imgBarra   = new BarraStatus("resources/personagem/barra.png", 15, 30);
+            this.imgBarra   = new BarraStatus("resources/personagem/barra.png", 17, 30);
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
@@ -85,11 +85,6 @@ public class Jogador extends Personagem{
         this.imgBarra.setStatus(this.hp, this.sp);
         this.imgBarra.draw(g);
         this.tiro.draw(g);
-    }
-    
-    @Override
-    protected void executaAudio(String diretorio) {
-        
     }
     
 }

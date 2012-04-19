@@ -76,10 +76,10 @@ public class TitleMap{
     private void listaImagens(){
         this.lista = new String[4]; // Inicializa o vetor onde o tamanho corresponde a quantidade de imagens usadas no cenario
         
-        this.lista[0] = "resources/cenario1/chao.png";    // Imagem tipo 1 na matriz
-        this.lista[1] = "resources/cenario1/imagem2.png"; // Imagem tipo 2 na matriz
-        this.lista[2] = "resources/cenario1/imagem3.jpg"; // Imagem tipo 3 na matriz
-        this.lista[3] = "resources/cenario1/imagem4.jpg"; // Imagem tipo 4 na matriz
+        this.lista[0] = "resources/cenario/chao.png";    // Imagem tipo 1 na matriz
+        this.lista[1] = "resources/cenario/imagem2.png"; // Imagem tipo 2 na matriz
+        this.lista[2] = "resources/cenario/imagem3.jpg"; // Imagem tipo 3 na matriz
+        this.lista[3] = "resources/cenario/imagem4.jpg"; // Imagem tipo 4 na matriz
     }
     
     public ArrayList<String> getPosicao(){

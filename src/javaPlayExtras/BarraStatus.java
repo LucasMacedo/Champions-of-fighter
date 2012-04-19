@@ -31,19 +31,17 @@ public class BarraStatus extends GameObject{
     public void draw(Graphics g){
         // Fundo HP
         g.setColor(Color.white);
-        g.fillRect(this.x+10, this.y+18, 150*2, 15);
+        g.fillRect(this.x+58, this.y+7, 144*2, 15);
         // Fundo SP
-
-        g.fillRect(this.x+10, this.y+42, 130, 10);
- 
-       
+        g.fillRect(this.x+59, this.y+24, 87*2, 15);
+        
         // Barra HP
-        g.setColor(Color.red);
-        g.fillRect(this.x+10, this.y+18, (int)hp*2, 15);
+        g.setColor(Color.GREEN);
+        g.fillRect(this.x+58, this.y+7, (int)hp*2, 15);
         // Barra SP
         g.setColor(Color.blue);            
         
-        g.fillRect(this.x+10, this.y+42, (int)sp*2, 10);
+        g.fillRect(this.x+59, this.y+24, (int)sp*2, 15);
         
         //g.setColor(Color.red);
         //g.fillRect(367, this.y+3, 65, 54);
@@ -54,16 +52,16 @@ public class BarraStatus extends GameObject{
     public void drawFlipped(Graphics g){
         // Fundo HP
         g.setColor(Color.white);
-        g.fillRect(this.x+60, this.y+18, 150*2, 15);
+        g.fillRect(this.x+58, this.y+7, 148*2, 15);
         // Fundo SP
-        g.fillRect(this.x+100, this.y+42, 130*2, 10);
+        g.fillRect(this.x+181, this.y+24, 87*2, 15);
         
         //Barra HP
-        g.setColor(Color.red);
-        g.fillRect((150-(int)hp)*2+this.x+60, this.y+18, ((int)hp)*2, 15);
+        g.setColor(Color.GREEN);
+        g.fillRect((150-(int)hp)*2+this.x+58, this.y+7, ((int)hp)*2, 15);
         // Barra SP
         g.setColor(Color.BLUE);
-        g.fillRect(this.x+100, this.y+42, ((int)sp)*2, 10);
+        g.fillRect(this.x+181, this.y+24, ((int)sp)*2, 15);
        
         
         this.barra.drawFlipped(g, x, y);
