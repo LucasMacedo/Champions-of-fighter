@@ -1,22 +1,25 @@
 package Personagens;
 
-import javaPlayExtras.Enum;
+import javaPlayExtras.EnumPersonagem;
 import java.awt.Graphics;
 import javaPlay.GameEngine;
 import javaPlay.Imagem;
 import javaPlay.Keyboard;
 import javaPlay.Keys;
+import javaPlayExtras.AudioPlayer;
 import javaPlayExtras.BarraStatus;
 
 public class Inimigo extends Personagem{
     
-    Enum tipoInimigo;
+    EnumPersonagem tipoInimigo;
     
-    public Inimigo(Enum tipoInimigo){
+    public Inimigo(EnumPersonagem tipoInimigo){
         super.load();
         this.load();
         
         this.tipoInimigo = tipoInimigo;
+        
+        this.forca = 50;
     }
     
     @Override
@@ -54,8 +57,7 @@ public class Inimigo extends Personagem{
             
             this.imgAtual   = new Imagem("resources/personagem/normal.png");
             
-            this.imgFrente  = new Imagem("resources/personagem/normal.png");
-            this.imgTras    = new Imagem("resources/personagem/normal.png");
+            this.imgAnda  = new Imagem("resources/personagem/normal.png");
             
             this.imgNormal  = new Imagem("resources/personagem/normal.png");
             this.imgMorto   = new Imagem("resources/personagem/haduken.png");

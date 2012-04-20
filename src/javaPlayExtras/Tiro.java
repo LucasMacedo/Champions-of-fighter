@@ -38,7 +38,7 @@ public class Tiro extends GameObject{
         }else{
             this.x = posicaoX+width;
         }
-        this.y = posicaoY+height/2;
+        this.y = posicaoY+((height/2)/2);
         
         this.personagem = personagem;
         
@@ -53,14 +53,13 @@ public class Tiro extends GameObject{
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro na imagem Tiro: "+e);
         }
+        
+        this.height = this.tiro.getHeight();
+        this.width = this.tiro.getWidth();
     }
     
     public void colisao(ObjetoComGravidade obj){
         this.existeColisao = obj.temColisao(this.getRectangle());
-    }
-    
-    private boolean existeColisao(){
-        return this.existeColisao;
     }
     
     private Rectangle getRectangle(){
@@ -78,24 +77,30 @@ public class Tiro extends GameObject{
         return existeTiro;
     }
     
+    public boolean existeColisao(){
+        return this.existeColisao;
+    }
+    
     @Override
     public void step(long timeElapsed) {
         this.timeElapsed += timeElapsed;
         
-        if(this.personagem.equals("inimigo")){
-            this.x -= 15;
-        }else{
-            this.x += 15;
-        }
-        if(this.existeColisao()){
-            //Animacao
-            
-            
-            this.fimTiro();
-        }
+        if(this.existeTiro){
+            if(this.personagem.equals("inimigo")){
+                this.x -= 15;
+            }else{
+                this.x += 15;
+            }
         
-        if(this.x > 850 || this.x < -50){
-            this.fimTiro();
+            if(this.existeColisao){
+                //Animacao
+
+                this.fimTiro();
+            }
+
+            if(this.x > 850 || this.x < -50){
+                this.fimTiro();
+            }
         }
     }
 

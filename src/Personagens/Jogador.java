@@ -35,7 +35,11 @@ public class Jogador extends Personagem{
         if(key.keyDown(Keys.D)){
             this.andaFrente();
         }
-        
+        // Tecla BATE
+        if(key.keyDown(Keys.E)){
+            this.bate();
+        }
+        // Nada
         if(!key.keyDown(Keys.W) && !key.keyDown(Keys.S) && !key.keyDown(Keys.D) && !key.keyDown(Keys.A) ){
             this.normal();
         }
@@ -51,7 +55,7 @@ public class Jogador extends Personagem{
             
             this.imgAtual   = new Imagem("resources/personagem/normal.png");
             
-            this.imgFrente  = new Imagem("resources/personagem/normal.png");
+            this.imgAnda  = new Imagem("resources/personagem/normal.png");
             this.imgTras    = new Imagem("resources/personagem/normal.png");
             
             this.imgNormal  = new Imagem("resources/personagem/normal.png");

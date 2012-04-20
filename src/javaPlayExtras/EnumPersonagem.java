@@ -8,7 +8,7 @@ package javaPlayExtras;
  *
  * @author Ricardo
  */
-public enum Enum {
+public enum EnumPersonagem {
     PERSONAGEM,
     JOGADOR,
     MARIO,

@@ -2,7 +2,7 @@
 package Cenarios;
 
 import Personagens.Inimigo;
-import javaPlayExtras.Enum;
+import javaPlayExtras.EnumPersonagem;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +12,7 @@ import javaPlayExtras.AudioPlayer;
 import javax.swing.JOptionPane;
 
 public class Rank implements GameStateController{
-    private ArrayList<Enum> listaClassificacao;
+    private ArrayList<EnumPersonagem> listaClassificacao;
     
     private Cenario cenario;
     
@@ -25,7 +25,7 @@ public class Rank implements GameStateController{
     private Inimigo inimigo;
     
     public Rank() {
-        this.listaClassificacao = new ArrayList<Enum>();
+        this.listaClassificacao = new ArrayList<EnumPersonagem>();
         this.cenario = new Cenario();
         
         this.load();
@@ -33,37 +33,37 @@ public class Rank implements GameStateController{
         Collections.shuffle(this.listaClassificacao);
         Collections.shuffle(this.listaClassificacao);
         
-        this.fundoAtual(Enum.MARIO);
+        this.fundoAtual(EnumPersonagem.CHEFAO);
     }
     
     public Cenario getCenario(){
         return this.cenario;
     }
     
-    private void fundoAtual(Enum inimigo){
-        if(inimigo == Enum.MARIO){
-            this.inimigo = new Inimigo(Enum.MARIO);
+    private void fundoAtual(EnumPersonagem inimigo){
+        if(inimigo == EnumPersonagem.MARIO){
+            this.inimigo = new Inimigo(EnumPersonagem.MARIO);
             this.cenario.setInimigo(this.fundoMario, this.inimigo);
             
             AudioPlayer.play("resources/som/mario-cenario.wav", true);
         }
-        if(inimigo == Enum.NARUTO){
-            this.inimigo = new Inimigo(Enum.NARUTO);
+        if(inimigo == EnumPersonagem.NARUTO){
+            this.inimigo = new Inimigo(EnumPersonagem.NARUTO);
             this.cenario.setInimigo(this.fundoNaruto, this.inimigo);
             //AudioPlayer.play("resources/som/naruto.wav", true);
         }
-        if(inimigo == Enum.INIMIGO3){
-            this.inimigo = new Inimigo(Enum.INIMIGO3);
+        if(inimigo == EnumPersonagem.INIMIGO3){
+            this.inimigo = new Inimigo(EnumPersonagem.INIMIGO3);
             this.cenario.setInimigo(this.fundoInimigo3, this.inimigo);
             //AudioPlayer.play("resources/som/inimigo3.wav", true);
         }
-        if(inimigo == Enum.INIMIGO4){
-            this.inimigo = new Inimigo(Enum.INIMIGO4);
+        if(inimigo == EnumPersonagem.INIMIGO4){
+            this.inimigo = new Inimigo(EnumPersonagem.INIMIGO4);
             this.cenario.setInimigo(this.fundoInimigo3, this.inimigo);
             //AudioPlayer.play("resources/som/inimigo4.wav", true);
         }
-        if(inimigo == Enum.CHEFAO){
-            this.inimigo = new Inimigo(Enum.CHEFAO);
+        if(inimigo == EnumPersonagem.CHEFAO){
+            this.inimigo = new Inimigo(EnumPersonagem.CHEFAO);
             this.cenario.setInimigo(this.fundoChefao, this.inimigo);
             //AudioPlayer.play("resources/som/chefao.wav", true);
         }
@@ -85,7 +85,7 @@ public class Rank implements GameStateController{
             this.fundoMario    = new Imagem("resources/cenario/mario.jpg");
             this.fundoNaruto   = new Imagem("resources/cenario/naruto.png");
             this.fundoInimigo3 = new Imagem("resources/cenario/mario.jpg");
-            this.fundoChefao   = new Imagem("resources/cenario/mario.jpg");
+            this.fundoChefao   = new Imagem("resources/cenario/dragonball.png");
             
             this.rank = new Imagem ("resources/Menu/Rank.png");
         }catch (Exception e){
@@ -94,14 +94,14 @@ public class Rank implements GameStateController{
         
         int cont = 0;
         while(cont < 2){
-            this.listaClassificacao.add(Enum.MARIO);
-            this.listaClassificacao.add(Enum.NARUTO);
-            this.listaClassificacao.add(Enum.INIMIGO3);
+            this.listaClassificacao.add(EnumPersonagem.MARIO);
+            this.listaClassificacao.add(EnumPersonagem.NARUTO);
+            this.listaClassificacao.add(EnumPersonagem.INIMIGO3);
             
             cont ++;
         }
-        this.listaClassificacao.add(Enum.INIMIGO4);
-        this.listaClassificacao.add(Enum.JOGADOR);
+        this.listaClassificacao.add(EnumPersonagem.INIMIGO4);
+        this.listaClassificacao.add(EnumPersonagem.JOGADOR);
     }
     @Override
     public void unload() {}
