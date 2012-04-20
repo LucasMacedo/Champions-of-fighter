@@ -14,9 +14,9 @@ public class MenuEntrada implements GameStateController{
     public MenuEntrada(){ 
     
         try {
-            //this.StartGame  = new Imagem("resources/menu/fundo.jpg");
-            //this.Exit = new Imagem("resources/menu/exit.jpg");
-            //this.FundoMenu = new Imagem ("resources/menu/menu.png");
+            this.StartGame  = new Imagem("resources/Menu/iniciar.png");
+            this.Exit = new Imagem("resources/Menu/sair.png");
+            this.FundoMenu = new Imagem ("resources/Menu/menu.png");
           } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar a imagem de fundo: "+e);
         }
@@ -31,9 +31,9 @@ public class MenuEntrada implements GameStateController{
 
     @Override
     public void draw(Graphics g) {
-        //this.FundoMenu.draw(g, 0, 0);
-        //this.Exit.draw(g, 50, 50);
-        //this.StartGame.draw(g, 80, 90);
+        this.FundoMenu.draw(g, 0, 0);
+        this.Exit.draw(g, 500, 400);
+        this.StartGame.draw(g, 500, 300);
         
         
     }
