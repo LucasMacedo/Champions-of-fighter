@@ -45,32 +45,23 @@ public class Cenario implements GameStateController{
         this.inimigo.colisaoTiro(this.jogador);
         if(this.inimigo.existeColisaoTiro()){
             this.jogador.apanha(this.inimigo.getForcaTiro());
-            if(this.inimigo.getHP() < 144){
-                this.inimigo.addHP(10);
-            }
+           
         }
         this.jogador.colisaoTiro(this.inimigo);
         if(this.jogador.existeColisaoTiro()){
             this.inimigo.apanha(this.jogador.getForcaTiro());
-            if(this.jogador.getHP() < 144){
-                this.jogador.addHP(100);
-            }
+           
         }
         // Colisao Bate
         if(this.jogador.getAcao() == EnumAcao.BATE){
             if(this.jogador.existeColisaoSoco(this.inimigo)){
                 this.inimigo.apanha(this.jogador.getForcaSoco());
-                if(this.jogador.getHP() < 144){
-                    this.jogador.addHP(10);
-                }
-            }
+          
+               }
         }
         if(this.inimigo.getAcao() == EnumAcao.BATE){
             if(this.inimigo.existeColisaoSoco(this.jogador)){
                 this.jogador.apanha(this.inimigo.getForcaSoco());
-                if(this.inimigo.getHP() < 144){
-                    this.inimigo.addHP(10);
-                }
             }
         }
     }

@@ -1,6 +1,7 @@
 package Personagens;
 
 import java.awt.Rectangle;
+import java.util.Random;
 import javaPlay.Imagem;
 import javaPlayExtras.AudioPlayer;
 import javaPlayExtras.BarraStatus;
@@ -82,7 +83,7 @@ public abstract class Personagem extends ObjetoComGravidade{
     public void bate(){
         this.mudaImagem(this.imgPula);
         this.acao = EnumAcao.BATE;
-        JOptionPane.showMessageDialog(null, "Bate");
+        
     }
     
     private void morre(){
@@ -101,10 +102,10 @@ public abstract class Personagem extends ObjetoComGravidade{
     }
     
     public void especial(String personagem){
-        if(this.sp > 30 && !this.tiro.getExiste()){
+        if(this.sp > 20 && !this.tiro.getExiste()){
             this.mudaImagem(this.imgEspecial);
             this.tiro = new Tiro(this.x, this.y, this.width, this.height, personagem);
-            this.sp -= 30;
+            this.sp -= 20;
             this.acao = EnumAcao.ESPECIAL;
         }else{
             this.cont ++;
@@ -185,4 +186,6 @@ public abstract class Personagem extends ObjetoComGravidade{
     public Rectangle getRectangle(){
         return new Rectangle(this.x, this.y, this.width, this.height);
     }
+
+
 }
