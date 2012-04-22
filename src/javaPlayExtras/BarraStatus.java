@@ -8,9 +8,9 @@ import javaPlay.Imagem;
 public class BarraStatus extends GameObject{
     private Imagem barra;
     
-    public BarraStatus(String diretorio, int x, int y){
+    public BarraStatus(int x, int y){
         try {
-            this.barra = new Imagem(diretorio);
+            this.barra = new Imagem("resources/personagem/barra/barra.png");
             
             this.width = this.barra.getWidth();
             this.height = this.barra.getHeight();
@@ -29,19 +29,20 @@ public class BarraStatus extends GameObject{
     
     @Override
     public void draw(Graphics g){
+        //this.barra.draw(g, this.x, this.y);
         // Fundo HP
         g.setColor(Color.white);
-        g.fillRect(this.x+58, this.y+7, 144*2, 15);
+        g.fillRect(this.x+63, this.y+7, 144*2, 15);
         // Fundo SP
-        g.fillRect(this.x+59, this.y+24, 87*2, 15);
+        g.fillRect(this.x+63, this.y+24, 86*2, 15);
         
         // Barra HP
         g.setColor(Color.GREEN);
-        g.fillRect(this.x+58, this.y+7, (int)hp*2, 15);
+        g.fillRect(this.x+61, this.y+7, (int)hp*2, 15);
         // Barra SP
         g.setColor(Color.blue);            
         
-        g.fillRect(this.x+59, this.y+24, (int)sp*2, 15);
+        g.fillRect(this.x+61, this.y+24, ((int)sp-1)*2, 15);
         
         //g.setColor(Color.red);
         //g.fillRect(367, this.y+3, 65, 54);
@@ -50,18 +51,19 @@ public class BarraStatus extends GameObject{
     }
     
     public void drawFlipped(Graphics g){
+        //this.barra.drawFlipped(g, x, y);
         // Fundo HP
         g.setColor(Color.white);
-        g.fillRect(this.x+62, this.y+7, 148*2, 15);
+        g.fillRect(this.x+53, this.y+7, 144*2, 15);
         // Fundo SP
-        g.fillRect(this.x+181, this.y+24, 87*2, 15);
+        g.fillRect(this.x+181, this.y+24, 86*2, 15);
         
         //Barra HP
         g.setColor(Color.GREEN);
-        g.fillRect((150-(int)hp)*2+this.x+58, this.y+7, ((int)hp)*2, 15);
+        g.fillRect((150-(int)hp)*2+this.x+53, this.y+7, ((int)hp)*2, 15);
         // Barra SP
         g.setColor(Color.BLUE);
-        g.fillRect((87-(int)sp)*2+this.x+181, this.y+24, ((int)sp)*2, 15);
+        g.fillRect((87-(int)sp)*2+this.x+181, this.y+24, ((int)sp-1)*2, 15);
        
         
         this.barra.drawFlipped(g, x, y);

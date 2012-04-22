@@ -47,15 +47,10 @@ public class Mouse implements MouseMotionListener, MouseListener
         return rightButtonPressed;
     }
 
-    public void mouseClicked(MouseEvent e)
-    {
-        
-    }
+    public void mouseClicked(MouseEvent e){}
 
-    public void mousePressed(MouseEvent e)
-    {
-        switch(e.getButton())
-        {
+    public void mousePressed(MouseEvent e){
+        switch(e.getButton()){
             case MouseEvent.BUTTON1:
                 leftButtonPressed = ((e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0);
                 break;
@@ -68,10 +63,8 @@ public class Mouse implements MouseMotionListener, MouseListener
         }
     }
 
-    public void mouseReleased(MouseEvent e)
-    {
-        switch(e.getButton())
-        {
+    public void mouseReleased(MouseEvent e){
+        switch(e.getButton()){
             case MouseEvent.BUTTON1:
                 leftButtonPressed = ((e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0);
                 break;
@@ -84,23 +77,13 @@ public class Mouse implements MouseMotionListener, MouseListener
         }
     }
 
-    public void mouseEntered(MouseEvent e)
-    {
-        
-    }
+    public void mouseEntered(MouseEvent e){}
 
-    public void mouseExited(MouseEvent e)
-    {
-        
-    }
+    public void mouseExited(MouseEvent e){}
 
-    public void mouseDragged(MouseEvent e)
-    {
-        
-    }
+    public void mouseDragged(MouseEvent e){}
 
-    public void mouseMoved(MouseEvent e)
-    {
+    public void mouseMoved(MouseEvent e){
         mousePos = e.getPoint();
     }
 

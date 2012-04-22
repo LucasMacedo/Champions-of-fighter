@@ -13,7 +13,6 @@ public enum EnumPersonagem {
     JOGADOR,
     MARIO,
     NARUTO,
-    INIMIGO3,
-    INIMIGO4,
+    ICHIGO,
     CHEFAO
 }

@@ -3,6 +3,7 @@ package Personagens;
 import java.awt.Rectangle;
 import java.util.Random;
 import javaPlay.Imagem;
+import javaPlay.Sprite;
 import javaPlayExtras.AudioPlayer;
 import javaPlayExtras.BarraStatus;
 import javaPlayExtras.EnumAcao;
@@ -11,15 +12,7 @@ import javaPlayExtras.Tiro;
 import javax.swing.JOptionPane;
 
 public abstract class Personagem extends ObjetoComGravidade{
-    protected Imagem imgPula;
-    protected Imagem imgApanha;
-    protected Imagem imgBate;
-    protected Imagem imgAnda;
-    protected Imagem imgTras;
-    protected Imagem imgMorto;
-    protected Imagem imgNormal;
-    protected Imagem imgAtual;
-    protected Imagem imgEspecial;
+    protected Sprite imgPersonagem;
     
     protected Tiro tiro;
     protected BarraStatus imgBarra;
@@ -35,6 +28,10 @@ public abstract class Personagem extends ObjetoComGravidade{
     protected EnumAcao acao = EnumAcao.NORMAL;
     
     protected abstract void eventosTeclado();
+    protected abstract void animacaoPula();
+    protected abstract void animacaoAnda();
+    protected abstract void animacaoEspecial();
+    protected abstract void animacaoBate();
     
     protected void load(){
         this.forcaImpulso = 38;
@@ -63,11 +60,9 @@ public abstract class Personagem extends ObjetoComGravidade{
         }
         this.eventosTeclado();
     }
-    private void mudaImagem(Imagem novaImagem){
-        this.imgAtual = novaImagem;
-        
-        this.setHeight( this.imgAtual.getHeight() );
-        this.setWidth( this.imgAtual.getWidth() );
+    private void mudaImagem(int width, int height){
+        this.setHeight( this.imgPersonagem.getHeight() );
+        this.setWidth( this.imgPersonagem.getWidth() );
     }
     
     public void apanha(double apanha){
@@ -76,18 +71,18 @@ public abstract class Personagem extends ObjetoComGravidade{
         }
         this.hp -= apanha;
         
-        this.mudaImagem(this.imgApanha);
+        this.mudaImagem(0,0);
         //AudioPlayer.play("resources/som/apanha.wav", true);
     }
     
     public void bate(){
-        this.mudaImagem(this.imgPula);
+        this.animacaoBate();
         this.acao = EnumAcao.BATE;
         
     }
     
     private void morre(){
-        this.mudaImagem(this.imgMorto);
+        this.mudaImagem(0,0);
         //System.out.println("Morreu");
     }
     
@@ -97,13 +92,13 @@ public abstract class Personagem extends ObjetoComGravidade{
         }
         
         this.impulso(this.forcaImpulso);
-        this.mudaImagem(this.imgPula);
+        this.animacaoPula();
         this.acao = EnumAcao.PULA;
     }
     
     public void especial(String personagem){
         if(this.sp > 20 && !this.tiro.getExiste()){
-            this.mudaImagem(this.imgEspecial);
+            this.animacaoEspecial();
             this.tiro = new Tiro(this.x, this.y, this.width, this.height, personagem);
             this.sp -= 20;
             this.acao = EnumAcao.ESPECIAL;
@@ -118,18 +113,18 @@ public abstract class Personagem extends ObjetoComGravidade{
     
     public void andaFrente(){
         this.x += 13;
-        this.mudaImagem(this.imgAnda);
+        this.animacaoAnda();
         this.acao = EnumAcao.ANDA;
     }
     
     public void andaTras(){
         this.x -= 13;
-        this.mudaImagem(this.imgAnda);
+        this.animacaoAnda();
         this.acao = EnumAcao.ANDA;
     }
     
     public void normal(){
-        this.mudaImagem(this.imgNormal);
+        this.mudaImagem(0,0);
         this.acao = EnumAcao.NORMAL;
     }
     
@@ -158,11 +153,11 @@ public abstract class Personagem extends ObjetoComGravidade{
     }
     
     public double getForcaTiro(){
-        return ((this.forca*this.forca)*2)/200;
+        return ((this.forca*this.forca)*2)/400;
     }
     
     public double getForcaSoco(){
-        return ((this.forca*this.forca)*2)/200;
+        return ((this.forca*this.forca)*2)/600;
     }
     
     public void colisaoTiro(ObjetoComGravidade obj){        

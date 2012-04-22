@@ -6,21 +6,12 @@ import javaPlay.GameEngine;
 import javaPlay.Imagem;
 import javaPlay.Keyboard;
 import javaPlay.Keys;
+import javaPlay.Sprite;
 import javaPlayExtras.AudioPlayer;
 import javaPlayExtras.BarraStatus;
 
 public class Inimigo extends Personagem{
-    
     EnumPersonagem tipoInimigo;
-    
-    public Inimigo(EnumPersonagem tipoInimigo){
-        super.load();
-        this.load();
-        
-        this.tipoInimigo = tipoInimigo;
-        
-        this.forca = 50;
-    }
     
     @Override
     protected void eventosTeclado() {
@@ -50,45 +41,48 @@ public class Inimigo extends Personagem{
     
     @Override
     protected void load() {
-        
-        try {
-            this.imgApanha  = new Imagem("resources/personagem/apanha.png");
-            this.imgBate    = new Imagem("resources/personagem/soco.png");
-            
-            this.imgAtual   = new Imagem("resources/personagem/normal.png");
-            
-            this.imgAnda  = new Imagem("resources/personagem/normal.png");
-            
-            this.imgNormal  = new Imagem("resources/personagem/normal.png");
-            this.imgMorto   = new Imagem("resources/personagem/haduken.png");
-            
-            this.imgPula    = new Imagem("resources/personagem/pula.png");
-            this.imgEspecial = new Imagem("resources/personagem/haduken.png");
-            
-            this.imgBarra   = new BarraStatus("resources/personagem/barra.png", 370, 30);
-        } catch (Exception e) {
-            //JOptionPane.showMessageDialog(null, "Erro: "+e);
-        }
+        super.load();
         
         this.x = 700;
         this.y = 400;
+        
+        this.forca = 50;
     }
     
     public void step(long timeEllapsed){
         super.step(timeEllapsed);
         
         this.tiro.step(timeEllapsed);
-        
         this.verificaColisaoParede();
     }
     
     @Override
     public void draw(Graphics g) {
-        this.imgAtual.drawFlipped(g, this.x, this.y);
+        this.imgPersonagem.drawFlipped(g, this.x, this.y);
         
-        //g.drawRect(this.x, this.y, this.imgAtual.getWidth(), this.imgAtual.getHeight());
+        g.drawRect(this.x, this.y, this.imgPersonagem.getWidth(), this.imgPersonagem.getHeight());
         this.imgBarra.setStatus(this.hp, this.sp);
         this.imgBarra.drawFlipped(g);
         this.tiro.drawFlipped(g);
+    }
+
+    @Override
+    protected void animacaoPula() {
+        
+    }
+
+    @Override
+    protected void animacaoAnda() {
+        
+    }
+
+    @Override
+    protected void animacaoEspecial() {
+        
+    }
+
+    @Override
+    protected void animacaoBate() {
+        
     }
 }

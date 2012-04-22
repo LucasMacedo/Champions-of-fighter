@@ -5,6 +5,7 @@ import javaPlay.GameEngine;
 import javaPlay.Imagem;
 import javaPlay.Keyboard;
 import javaPlay.Keys;
+import javaPlay.Sprite;
 import javaPlayExtras.BarraStatus;
 import javaPlayExtras.Tiro;
 
@@ -47,29 +48,15 @@ public class Jogador extends Personagem{
     
     @Override
     protected void load() {
-        
-        
         try {
-            this.imgApanha  = new Imagem("resources/personagem/apanha.png");
-            this.imgBate    = new Imagem("resources/personagem/soco.png");
+            this.imgPersonagem = new Sprite("resources/personagem/inimigo/mario.png", 1, 0, 76, 77);
             
-            this.imgAtual   = new Imagem("resources/personagem/normal.png");
-            
-            this.imgAnda  = new Imagem("resources/personagem/normal.png");
-            this.imgTras    = new Imagem("resources/personagem/normal.png");
-            
-            this.imgNormal  = new Imagem("resources/personagem/normal.png");
-            this.imgMorto   = new Imagem("resources/personagem/haduken.png");
-            
-            this.imgPula    = new Imagem("resources/personagem/pula.png");
-            this.imgEspecial = new Imagem("resources/personagem/haduken.png");
-            
-            this.imgBarra   = new BarraStatus("resources/personagem/barra.png", 17, 30);
+            this.imgBarra    = new BarraStatus(17, 30);
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
         
-        this.x = 50;
+        this.x = 500;
         this.y = 400;
     }
     
@@ -83,12 +70,32 @@ public class Jogador extends Personagem{
     
     @Override
     public void draw(Graphics g) {
-        this.imgAtual.draw(g, this.x, this.y);
+        this.imgPersonagem.draw(g, this.x, this.y);
         
-        //g.drawRect(this.x, this.y, this.imgAtual.getWidth(), this.imgAtual.getHeight());
+        //g.drawRect(this.x, this.y, this.imgPersonagem.getWidth(), this.imgPersonagem.getHeight());
         this.imgBarra.setStatus(this.hp, this.sp);
         this.imgBarra.draw(g);
         this.tiro.draw(g);
+    }
+
+    @Override
+    protected void animacaoPula() {
+        
+    }
+
+    @Override
+    protected void animacaoAnda() {
+        
+    }
+
+    @Override
+    protected void animacaoEspecial() {
+        
+    }
+
+    @Override
+    protected void animacaoBate() {
+        
     }
     
 }

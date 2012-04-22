@@ -24,7 +24,7 @@ public class Sprite
     
     private int MAX_COUNT = 50;
 
-    public Sprite(String filename, int animFrameCount, int animFrameWidth,
+    public Sprite(String filename, int animFrameCountWidth, int animFrameCountHeight, int animFrameWidth,
             int animFrameHeight) throws Exception
     {
         image = Toolkit.getDefaultToolkit().getImage(filename);
@@ -42,31 +42,29 @@ public class Sprite
             }
         }
 
-        this.animFrameCount = animFrameCount;
+        this.animFrameCount = animFrameCountWidth;
         this.animFrameWidth = animFrameWidth;
         this.animFrameHeight = animFrameHeight;
         
-        this.currAnimFrameH = 0;
-        this.currAnimFrameV = 0;
+        this.currAnimFrameH = animFrameCountWidth;
+        this.currAnimFrameV = animFrameCountHeight;
     }
     
     public int getCurrAnimFrameH(){
-        return (currAnimFrameH+1);
+        return (currAnimFrameH);
     }
     
     public int getCurrAnimFrameV(){
-        return (currAnimFrameV+1);
+        return (currAnimFrameV);
     }
     
     public void setCurrAnimFrameH(int frame){
-        currAnimFrameH = frame - 1;
+        currAnimFrameH = frame;
     }
     
     public void setCurrAnimFrameV(int frame){
-        currAnimFrameV = frame - 1;
+        currAnimFrameV = frame;
     }
-    
-    
     
     public void setAnimFrameWidth(int width){
         animFrameWidth = width;
@@ -84,7 +82,13 @@ public class Sprite
         return animFrameWidth;
     }
 
-    
+    public int getWidth() {
+        return this.animFrameWidth;
+    }
+
+    public int getHeight() {
+        return this.animFrameHeight;
+    }
     
     public void draw(Graphics g, int x, int y)
     {
@@ -109,6 +113,22 @@ public class Sprite
                 
                 null);
     }   
+    
+    public void drawFlipped(Graphics g, int x, int y) {
+        x -= (image.getWidth(null)/4);
+        g.drawImage(image, 
+                    (image.getWidth(null))/2 + x, y, 
+                    x + animFrameWidth, 
+                    y + animFrameHeight,
+                    
+                    (currAnimFrameH) * animFrameWidth,
+                    (currAnimFrameV) * animFrameHeight, 
+                    
+                    (currAnimFrameH + 1) * animFrameWidth, 
+                    (currAnimFrameV + 1) * animFrameHeight, 
+                    
+                    null);
+    }
 
     private Sprite(Image image, int animFrameCount,
             int currAnimFrame, int animFrameWidth, int animFrameHeight)
