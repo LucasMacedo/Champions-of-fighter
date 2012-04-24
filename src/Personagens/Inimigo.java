@@ -11,11 +11,13 @@ import javaPlayExtras.AudioPlayer;
 import javaPlayExtras.BarraStatus;
 
 public class Inimigo extends Personagem{
-    EnumPersonagem tipoInimigo;
-    
     @Override
     protected void eventosTeclado() {
         Keyboard key = GameEngine.getInstance().getKeyboard();
+        
+        if(this.getPausaJogo()){
+            return;
+        }
         
         // Tecla UP
         if( key.keyDown(Keys.TOP)){
@@ -23,7 +25,7 @@ public class Inimigo extends Personagem{
         }
         // Tecla DOWN
         if(key.keyDown(Keys.BOTTOM)){
-            this.especial("inimigo");
+            this.especial(this.tipoPersonagem);
         }
         // Tecla LEFT
         if(key.keyDown(Keys.LEFT)){
@@ -43,9 +45,10 @@ public class Inimigo extends Personagem{
     protected void load() {
         super.load();
         
-        this.x = 700;
+        this.x = 50;
         this.y = 400;
         
+        this.inteligencia = 70;
         this.forca = 50;
     }
     
@@ -58,12 +61,12 @@ public class Inimigo extends Personagem{
     
     @Override
     public void draw(Graphics g) {
-        this.imgPersonagem.drawFlipped(g, this.x, this.y);
+        this.imgPersonagem.draw(g, this.x, this.y);
         
         g.drawRect(this.x, this.y, this.imgPersonagem.getWidth(), this.imgPersonagem.getHeight());
         this.imgBarra.setStatus(this.hp, this.sp);
-        this.imgBarra.drawFlipped(g);
-        this.tiro.drawFlipped(g);
+        this.imgBarra.draw(g);
+        this.tiro.draw(g);
     }
 
     @Override
@@ -82,7 +85,22 @@ public class Inimigo extends Personagem{
     }
 
     @Override
-    protected void animacaoBate() {
+    protected boolean animacaoBate() {
+        return false;
+    }
+
+    @Override
+    protected void animacaoApanha() {
+        
+    }
+
+    @Override
+    protected void animacaoMorre() {
+        
+    }
+
+    @Override
+    protected void animacaoNormal() {
         
     }
 }

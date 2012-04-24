@@ -28,7 +28,7 @@ public class Cenario implements GameStateController{
     private Sprite tempo2;
     
     private long timeElapsed;
-    private int minuto = 60;
+    private int minuto = 50;
     private int round = 1;
     
     private Jogador jogador;
@@ -79,14 +79,33 @@ public class Cenario implements GameStateController{
         }
         // Colisao Bate
         if(this.jogador.getAcao() == EnumAcao.BATE){
+            this.jogador.setAcao(EnumAcao.NORMAL);
             if(this.jogador.existeColisaoSoco(this.inimigo)){
                 this.inimigo.apanha(this.jogador.getForcaSoco());
-          
-               }
+            }
+            return;
         }
         if(this.inimigo.getAcao() == EnumAcao.BATE){
+            this.inimigo.setAcao(EnumAcao.NORMAL);
             if(this.inimigo.existeColisaoSoco(this.jogador)){
                 this.jogador.apanha(this.inimigo.getForcaSoco());
+            }
+            return;
+        }
+        
+        if(this.inimigo.temColisao(this.jogador.getRectangle())){
+            if(this.jogador.getAcao() == EnumAcao.ANDATRAZ && this.inimigo.getAcao() == EnumAcao.ANDAFRENTE){
+                this.jogador.andaFrente();
+                this.inimigo.andaTras();
+                return;
+            }
+            if(this.jogador.getAcao() == EnumAcao.ANDATRAZ){
+                this.jogador.andaFrente();
+                return;
+            }
+            if(this.inimigo.getAcao() == EnumAcao.ANDAFRENTE){
+                this.inimigo.andaTras();
+                return;
             }
         }
     }
@@ -95,25 +114,25 @@ public class Cenario implements GameStateController{
         switch (inimigo){
             case MARIO:
                 this.inimigo = new Mario();
-                this.imgCenario.setCurrAnimFrameH(0);
+                this.imgCenario.setCurrAnimFrameWidth(0);
                 
                 //AudioPlayer.play("resources/audio/cenario/mario.wav", true);
                 break;
             case NARUTO:
                 this.inimigo = new Naruto();
-                this.imgCenario.setCurrAnimFrameH(3);
+                this.imgCenario.setCurrAnimFrameWidth(3);
                 
                 //AudioPlayer.play("resources/audio/cenario/naruto.wav", true);
                 break;
             case ICHIGO:
                 this.inimigo = new Ichigo();
-                this.imgCenario.setCurrAnimFrameH(2);
+                this.imgCenario.setCurrAnimFrameWidth(2);
                 
                 //AudioPlayer.play("resources/audio/cenario/ichigo.wav", true);
                 break;
             case CHEFAO:
                 this.inimigo = new Chefao();
-                this.imgCenario.setCurrAnimFrameH(1);
+                this.imgCenario.setCurrAnimFrameWidth(1);
                 
                 //AudioPlayer.play("resources/audio/cenario/chefao.wav", true);
                 break;
@@ -125,24 +144,28 @@ public class Cenario implements GameStateController{
         this.jogador.step(timeElapsed);
         this.inimigo.step(timeElapsed);
         
-        this.verificaColisao(timeElapsed);
-        
         this.timeElapsed += timeElapsed;
         if(this.timeElapsed >= 1000){
             this.minuto --;
             this.timeElapsed = 0;
         }
+        
         if(this.minuto < 0){
-            this.minuto = 60;
+            this.jogador.pausaJogo(true);
+            this.inimigo.pausaJogo(true);
+            
+            this.minuto = 50;
         }
+        
+        this.verificaColisao(timeElapsed);
         
         String minuto = this.minuto+"";
         if(this.minuto < 10){
             minuto = "0"+minuto;
         }
         
-        this.tempo1.setCurrAnimFrameH(Integer.parseInt((minuto).substring(0, 1)));
-        this.tempo2.setCurrAnimFrameH(Integer.parseInt((minuto).substring(1, 2)));
+        this.tempo1.setCurrAnimFrameWidth(Integer.parseInt((minuto).substring(0, 1)));
+        this.tempo2.setCurrAnimFrameWidth(Integer.parseInt((minuto).substring(1, 2)));
         
     }
     
@@ -153,8 +176,8 @@ public class Cenario implements GameStateController{
         
         this.inimigo.draw(g);
         this.jogador.draw(g);
-        this.tempo1.draw(g, 391, 50);
-        this.tempo2.draw(g, 403, 50);
+        this.tempo1.draw(g, 390, 50);
+        this.tempo2.draw(g, 402, 50);
     }
     
     @Override

@@ -7,5 +7,6 @@ public enum EnumAcao {
     MORTO,
     NORMAL,
     PULA,
-    ANDA
+    ANDAFRENTE,
+    ANDATRAZ
 }

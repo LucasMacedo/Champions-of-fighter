@@ -50,44 +50,36 @@ public class Sprite
         this.currAnimFrameV = animFrameCountHeight;
     }
     
-    public int getCurrAnimFrameH(){
+    public int getCurrAnimFrameWidth(){
         return (currAnimFrameH);
     }
     
-    public int getCurrAnimFrameV(){
+    public int getCurrAnimFrameHeight(){
         return (currAnimFrameV);
     }
     
-    public void setCurrAnimFrameH(int frame){
+    public void setCurrAnimFrameWidth(int frame){
         currAnimFrameH = frame;
     }
     
-    public void setCurrAnimFrameV(int frame){
+    public void setCurrAnimFrameHeight(int frame){
         currAnimFrameV = frame;
     }
     
-    public void setAnimFrameWidth(int width){
-        animFrameWidth = width;
-    }
-    
-    public void setAnimFrameHeight(int height){
-        animFrameWidth = height;
-    }
-    
-    public int getAnimFrameWidth(){
-        return animFrameWidth;
-    }
-    
-    public int getAnimFrameHeight(){
-        return animFrameWidth;
-    }
-
     public int getWidth() {
         return this.animFrameWidth;
     }
 
     public int getHeight() {
         return this.animFrameHeight;
+    }
+    
+    public void setWidth(int width){
+        this.animFrameWidth = width;
+    }
+    
+    public void setHeight(int height){
+        this.animFrameHeight = height;
     }
     
     public void draw(Graphics g, int x, int y)
@@ -112,12 +104,36 @@ public class Sprite
                 (currAnimFrameV + 1) * animFrameHeight, 
                 
                 null);
+    }
+    
+    public void draw(Graphics g, int x, int y, int width, int height)
+    {
+        GameCanvas canvas = GameEngine.getInstance().getGameCanvas();
+
+        //int xpos = canvas.getRenderScreenStartX() + x;
+        //int ypos = canvas.getRenderScreenStartY() + y;
+        
+        int xpos =  x;
+        int ypos =  y;
+
+        g.drawImage(image, 
+                xpos, ypos, 
+                xpos + animFrameWidth, 
+                ypos + animFrameHeight,
+                
+                currAnimFrameH * animFrameWidth,  
+                currAnimFrameV * animFrameHeight, 
+                
+                (currAnimFrameH + 1) * animFrameWidth, 
+                (currAnimFrameV + 1) * animFrameHeight, 
+                
+                null);
     }   
     
     public void drawFlipped(Graphics g, int x, int y) {
-        x -= (image.getWidth(null)/4);
+        x -= (animFrameWidth/2);
         g.drawImage(image, 
-                    (image.getWidth(null))/2 + x, y, 
+                    (animFrameWidth)/4 + x, y, 
                     x + animFrameWidth, 
                     y + animFrameHeight,
                     

@@ -11,14 +11,13 @@ import javaPlay.Sprite;
 import javax.swing.JOptionPane;
 
 public class Tiro extends GameObject{
-    
-    long timeElapsed;
+    private long timeElapsed;
     
     private boolean existeTiro;
     private boolean existeColisao;
     private Imagem tiro;
     
-    private String personagem;
+    private EnumPersonagem personagem;
     
     public Tiro(){
         this.height = 0;
@@ -27,13 +26,13 @@ public class Tiro extends GameObject{
         this.x = -10;
         this.y = -10;
         
-        this.personagem = "personagem";
+        this.personagem = EnumPersonagem.PERSONAGEM;
         
         this.iniciaTiro();
     }
     
-    public Tiro(int posicaoX, int posicaoY, int width, int height, String personagem){
-        if(personagem.equals("inimigo")){
+    public Tiro(int posicaoX, int posicaoY, int width, int height, EnumPersonagem personagem){
+        if(personagem == EnumPersonagem.PERSONAGEM){
             this.x = posicaoX-25;
         }else{
             this.x = posicaoX+width;
@@ -86,7 +85,7 @@ public class Tiro extends GameObject{
         this.timeElapsed += timeElapsed;
         
         if(this.existeTiro){
-            if(this.personagem.equals("inimigo")){
+            if(this.personagem == EnumPersonagem.JOGADOR){
                 this.x -= 15;
             }else{
                 this.x += 15;
