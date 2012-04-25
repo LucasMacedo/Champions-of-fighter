@@ -23,8 +23,8 @@ public class Tiro extends GameObject{
         this.height = 0;
         this.width = 0;
         
-        this.x = -10;
-        this.y = -10;
+        this.x = -300;
+        this.y = -300;
         
         this.personagem = EnumPersonagem.PERSONAGEM;
         
@@ -48,7 +48,26 @@ public class Tiro extends GameObject{
     
     private void iniciaTiro(){
         try {
-            this.tiro = new Imagem("resources/personagem/especial.png");
+            switch(this.personagem){
+                case JOGADOR:
+                    this.tiro = new Imagem("resources/personagem/especial.png");
+                    break;
+                case MARIO:
+                    this.tiro = new Imagem("resources/personagem/inimigo/tiroMario.gif");
+                    break;
+                case CHEFAO:
+                    this.tiro = new Imagem("resources/personagem/especial.png");
+                    break;
+                case ICHIGO:
+                    this.tiro = new Imagem("resources/personagem/especial.png");
+                    break;
+                case NARUTO:
+                    this.tiro = new Imagem("resources/personagem/especial.png");
+                    break;
+                default: 
+                    this.tiro = new Imagem("resources/personagem/especial.png");
+                    break;
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro na imagem Tiro: "+e);
         }
@@ -66,8 +85,8 @@ public class Tiro extends GameObject{
     }
     
     private void fimTiro(){
-        this.x = -20;
-        this.y = -20;
+        this.x = 250;
+        this.y = 250;
         
         this.existeTiro = false;
     }
@@ -106,6 +125,10 @@ public class Tiro extends GameObject{
     @Override
     public void draw(Graphics g) {
         this.tiro.draw(g, this.x, this.y);
+    }
+    
+    public void drawUPPER(Graphics g, double aumenta){
+        this.tiro.drawUPPER(g, this.x, this.y, aumenta);
     }
     
     public void drawFlipped(Graphics g) {

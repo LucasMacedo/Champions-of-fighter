@@ -93,7 +93,13 @@ public class Cenario implements GameStateController{
             return;
         }
         
-        if(this.inimigo.temColisao(this.jogador.getRectangle())){
+        this.jogador.colisaoPersonagem(this.inimigo.temColisao(this.jogador.getRectangle()));
+        
+        if(this.inimigo.colisaoPersonagem(this.jogador.getRectangle())){
+            if(this.jogador.getAcao() == EnumAcao.BATE){
+                this.jogador.andaFrente();
+                System.out.println("Jogador bateu!");
+            }
             if(this.jogador.getAcao() == EnumAcao.ANDATRAZ && this.inimigo.getAcao() == EnumAcao.ANDAFRENTE){
                 this.jogador.andaFrente();
                 this.inimigo.andaTras();
@@ -176,6 +182,7 @@ public class Cenario implements GameStateController{
         
         this.inimigo.draw(g);
         this.jogador.draw(g);
+        
         this.tempo1.draw(g, 390, 50);
         this.tempo2.draw(g, 402, 50);
     }

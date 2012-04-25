@@ -30,8 +30,12 @@ public abstract class Personagem extends ObjetoComGravidade{
     
     protected int vezesMorto = 0;
     
+    protected int xInimigo = 0;
+    
     protected boolean imgPersonagemVolta;
     protected boolean jogoPausado;
+    
+    protected boolean colisaoPersonagem;
     
     protected EnumAcao acao = EnumAcao.NORMAL;
     
@@ -113,9 +117,9 @@ public abstract class Personagem extends ObjetoComGravidade{
             this.normal();
             return;
         }
-        if(this.animacaoBate()){
-            this.acao = EnumAcao.BATE;
-        }
+        this.acao = EnumAcao.BATE;
+        
+        this.animacaoBate();
     }
     
     private void morre(){
@@ -136,7 +140,7 @@ public abstract class Personagem extends ObjetoComGravidade{
         this.acao = EnumAcao.PULA;
     }
     
-    public void especial(EnumPersonagem personagem){
+    public void especial(){
         if(this.acao == EnumAcao.APANHA){
             this.normal();
             return;
@@ -145,7 +149,7 @@ public abstract class Personagem extends ObjetoComGravidade{
         if(this.sp > 20 && !this.tiro.getExiste()){
             this.acao = EnumAcao.ESPECIAL;
             this.animacaoEspecial();
-            this.tiro = new Tiro(this.x, this.y, this.width, this.height, personagem);
+            this.tiro = new Tiro(this.x, this.y, this.width, this.height, this.tipoPersonagem);
             this.sp -= 20;
         }else{
             this.cont ++;
@@ -239,13 +243,23 @@ public abstract class Personagem extends ObjetoComGravidade{
         return new Rectangle(this.x, this.y, this.width, this.height);
     }
     
-    public boolean colisaoPersonagem(Personagem p){
-        int x = p.getX();
-        int y = p.getY();
-        
-        int width = p.getWidth();
-        int height = p.getHeight();
-        
-        return false;
+    public void colisaoPersonagem(boolean colisao){
+        this.colisaoPersonagem = colisao;
     }
+    
+    public void setXInimigo(int xInimigo){
+        this.xInimigo = xInimigo;
+    }
+    
+    public Rectangle getRectangleMenor(){
+        if(this.tipoPersonagem == EnumPersonagem.JOGADOR){
+            return new Rectangle(this.x-5, y, width-5, height);
+        }
+        return new Rectangle(this.x+5, y, width+5, height);
+    }
+    
+    public boolean colisaoPersonagem(Rectangle rec){
+        return this.getRectangleMenor().intersects(rec);
+    }
+    
 }

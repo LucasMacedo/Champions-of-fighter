@@ -23,34 +23,39 @@ public class Jogador extends Personagem{
     protected void eventosTeclado() {
         Keyboard key = GameEngine.getInstance().getKeyboard();
         
+        boolean teclaPressionada = false;
+        
         if(this.getPausaJogo()){
             return;
         }
         
         // Tecla UP
-        if(key.keyDown(Keys.W)){
+        if(key.keyDown(Keys.TOP)){
             this.pula();
-            return;
+            teclaPressionada = true;
         }
         // Tecla DOWN
-        if(key.keyDown(Keys.S)){
-            this.especial(EnumPersonagem.JOGADOR);
-            return;
+        if(key.keyDown(Keys.BOTTOM)){
+            this.especial();
+            teclaPressionada = true;
         }
         // Tecla LEFT
-        if(key.keyDown(Keys.A)){
+        if(key.keyDown(Keys.LEFT)){
+            if(this.colisaoPersonagem){
+                return;
+            }
             this.andaTras();
-            return;
+            teclaPressionada = true;
         }
         // Tecla RIGHT
-        if(key.keyDown(Keys.D)){
+        if(key.keyDown(Keys.RIGHT)){
             this.andaFrente();
-            return;
+            teclaPressionada = true;
         }
         // Tecla BATE
-        if(key.keyDown(Keys.E)){
+        if(key.keyDown(Keys.O)){
             this.bate();
-            return;
+            teclaPressionada = true;
         }
         // Nada
         if(this.acao != EnumAcao.NORMAL){
@@ -60,25 +65,29 @@ public class Jogador extends Personagem{
             this.normal();
             return;
         }
-        this.normal();
+        if(!teclaPressionada){
+            this.normal();
+        }
     }
     
     @Override
     protected void load() {
+        this.tipoPersonagem = EnumPersonagem.JOGADOR;
+        
         try {
             this.imgPersonagem = new Sprite("resources/personagem/jogador/jogador.png", 0, 0, 37, 94);
-            this.imgBarra    = new BarraStatus(370, 30);
+            this.imgBarra    = new BarraStatus(370, 30, this.tipoPersonagem);
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
-        
-        this.tipoPersonagem = EnumPersonagem.JOGADOR;
         
         this.forca = 50;
         this.inteligencia = 70;
         
         this.x = 700;
         this.y = 400;
+        
+        this.normal();
     }
     
     public void step(long timeEllapsed){
@@ -93,7 +102,7 @@ public class Jogador extends Personagem{
     public void draw(Graphics g) {
         this.imgPersonagem.draw(g, this.x, this.y);
         
-        //g.drawRect(this.x, this.y, this.imgPersonagem.getWidth(), this.imgPersonagem.getHeight());
+        g.drawRect(this.x, this.y, this.imgPersonagem.getWidth(), this.imgPersonagem.getHeight());
         this.imgBarra.setStatus(this.hp, this.sp);
         this.imgBarra.drawFlipped(g);
         this.tiro.drawFlipped(g);

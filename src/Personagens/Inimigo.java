@@ -9,34 +9,56 @@ import javaPlay.Keys;
 import javaPlay.Sprite;
 import javaPlayExtras.AudioPlayer;
 import javaPlayExtras.BarraStatus;
+import javaPlayExtras.EnumAcao;
 
 public class Inimigo extends Personagem{
     @Override
     protected void eventosTeclado() {
         Keyboard key = GameEngine.getInstance().getKeyboard();
         
+        boolean teclaPressionada = false;
+        
         if(this.getPausaJogo()){
             return;
         }
         
         // Tecla UP
-        if( key.keyDown(Keys.TOP)){
+        if(key.keyDown(Keys.W)){
             this.pula();
+            teclaPressionada = true;
         }
         // Tecla DOWN
-        if(key.keyDown(Keys.BOTTOM)){
-            this.especial(this.tipoPersonagem);
+        if(key.keyDown(Keys.S)){
+            this.especial();
+            teclaPressionada = true;
         }
         // Tecla LEFT
-        if(key.keyDown(Keys.LEFT)){
+        if(key.keyDown(Keys.A)){
+            if(this.colisaoPersonagem){
+                return;
+            }
             this.andaTras();
+            teclaPressionada = true;
         }
         // Tecla RIGHT
-        if(key.keyDown(Keys.RIGHT)){
+        if(key.keyDown(Keys.D)){
             this.andaFrente();
+            teclaPressionada = true;
         }
-        
-        if(!key.keyDown(Keys.TOP) && !key.keyDown(Keys.BOTTOM) && !key.keyDown(Keys.LEFT) && !key.keyDown(Keys.RIGHT) ){
+        // Tecla BATE
+        if(key.keyDown(Keys.E)){
+            this.bate();
+            teclaPressionada = true;
+        }
+        // Nada
+        if(this.acao != EnumAcao.NORMAL){
+            if(this.timeEllapsed <= 185){
+                return;
+            }
+            this.normal();
+            return;
+        }
+        if(!teclaPressionada){
             this.normal();
         }
     }
@@ -66,23 +88,25 @@ public class Inimigo extends Personagem{
         g.drawRect(this.x, this.y, this.imgPersonagem.getWidth(), this.imgPersonagem.getHeight());
         this.imgBarra.setStatus(this.hp, this.sp);
         this.imgBarra.draw(g);
-        this.tiro.draw(g);
+        
+        switch(this.tipoPersonagem){
+            case MARIO:
+                this.tiro.drawUPPER(g, 1.5);
+                break;
+            default:
+                this.tiro.draw(g);
+                break;
+        }
     }
 
     @Override
-    protected void animacaoPula() {
-        
-    }
+    protected void animacaoPula() {}
 
     @Override
-    protected void animacaoAnda() {
-        
-    }
+    protected void animacaoAnda() {}
 
     @Override
-    protected void animacaoEspecial() {
-        
-    }
+    protected void animacaoEspecial() {}
 
     @Override
     protected boolean animacaoBate() {
@@ -90,17 +114,11 @@ public class Inimigo extends Personagem{
     }
 
     @Override
-    protected void animacaoApanha() {
-        
-    }
+    protected void animacaoApanha() {}
 
     @Override
-    protected void animacaoMorre() {
-        
-    }
+    protected void animacaoMorre() {}
 
     @Override
-    protected void animacaoNormal() {
-        
-    }
+    protected void animacaoNormal() {}
 }

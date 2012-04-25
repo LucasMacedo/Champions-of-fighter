@@ -38,8 +38,14 @@ public class Imagem {
 	public void draw(Graphics graphics, int x, int y) {
 		graphics.drawImage(image, x, y, null);
 	}
-
-    public void drawFlipped(Graphics graphics, int x, int y) {
+        
+        public void drawUPPER(Graphics graphics, int x, int y, double aumenta){
+            graphics.drawImage(image, (int)(image.getWidth(null)*aumenta) + x, y, x,
+				(int)(image.getHeight(null)*aumenta) + y, 0, 0, image.getWidth(null),
+				image.getHeight(null), null);
+        }
+        
+        public void drawFlipped(Graphics graphics, int x, int y) {
 		graphics.drawImage(image, image.getWidth(null) + x, y, x,
 				image.getHeight(null) + y, 0, 0, image.getWidth(null),
 				image.getHeight(null), null);
