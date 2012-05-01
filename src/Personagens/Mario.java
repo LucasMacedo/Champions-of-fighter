@@ -3,8 +3,10 @@ package Personagens;
 import java.awt.Graphics;
 import javaPlay.Imagem;
 import javaPlay.Sprite;
+import javaPlayExtras.AudioPlayer;
 import javaPlayExtras.BarraStatus;
 import javaPlayExtras.EnumPersonagem;
+import javaPlayExtras.Som;
 import javax.swing.JOptionPane;
 
 public class Mario extends Inimigo{
@@ -34,6 +36,10 @@ public class Mario extends Inimigo{
         
         this.imgPersonagem.setCurrAnimFrameWidth(0);
         this.imgPersonagem.setCurrAnimFrameHeight(1);
+        
+        
+        
+        //AudioPlayer.play("resources/audio/personagem/mario-pula.wav");
     }
 
     @Override
@@ -53,8 +59,6 @@ public class Mario extends Inimigo{
 
     @Override
     protected boolean animacaoBate() {
-        int frames = 3;
-        
         if(this.timeEllapsed+20 < 100){
             this.imgPersonagem.setWidth(62);
             this.imgPersonagem.setCurrAnimFrameHeight(3);

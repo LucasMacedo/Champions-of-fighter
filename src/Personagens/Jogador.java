@@ -9,6 +9,7 @@ import javaPlay.Sprite;
 import javaPlayExtras.BarraStatus;
 import javaPlayExtras.EnumAcao;
 import javaPlayExtras.EnumPersonagem;
+import javaPlayExtras.Impacto;
 import javaPlayExtras.Tiro;
 import javax.swing.JOptionPane;
 
@@ -29,45 +30,78 @@ public class Jogador extends Personagem{
             return;
         }
         
-        // Tecla UP
+        if(key.keyDown(Keys.TOP) && key.keyDown(Keys.LEFT)){
+            this.andaTras();
+            this.pula();
+            return;
+        }
+        if(key.keyDown(Keys.TOP) && key.keyDown(Keys.RIGHT)){
+            this.andaFrente();
+            this.pula();
+            return;
+        }
+        if(key.keyDown(Keys.TOP) && key.keyDown(Keys.O)){
+            this.bate();
+            this.pula();
+            return;
+        }
+        if(key.keyDown(Keys.TOP) && key.keyDown(Keys.BOTTOM)){
+            this.especial();
+            this.pula();
+            return;
+        }
         if(key.keyDown(Keys.TOP)){
             this.pula();
-            teclaPressionada = true;
+            return;
         }
+        
+        // Tecla BATE
+        if(key.keyDown(Keys.O) && key.keyDown(Keys.LEFT)){
+            this.andaTras();
+            this.bate();
+            return;
+        }
+        if(key.keyDown(Keys.O) && key.keyDown(Keys.RIGHT)){
+            this.andaFrente();
+            this.bate();
+            return;
+        }
+        if(key.keyDown(Keys.O)){
+            this.bate();
+            return;
+        }
+        
         // Tecla DOWN
+        if(key.keyDown(Keys.BOTTOM) && key.keyDown(Keys.LEFT)){
+            this.andaTras();
+            this.especial();
+            return;
+        }
+        if(key.keyDown(Keys.BOTTOM) && key.keyDown(Keys.RIGHT)){
+            this.andaFrente();
+            this.especial();
+            return;
+        }
         if(key.keyDown(Keys.BOTTOM)){
             this.especial();
-            teclaPressionada = true;
+            return;
         }
+        
         // Tecla LEFT
         if(key.keyDown(Keys.LEFT)){
             if(this.colisaoPersonagem){
                 return;
             }
             this.andaTras();
-            teclaPressionada = true;
+            return;
         }
         // Tecla RIGHT
         if(key.keyDown(Keys.RIGHT)){
             this.andaFrente();
-            teclaPressionada = true;
-        }
-        // Tecla BATE
-        if(key.keyDown(Keys.O)){
-            this.bate();
-            teclaPressionada = true;
-        }
-        // Nada
-        if(this.acao != EnumAcao.NORMAL){
-            if(this.timeEllapsed <= 185){
-                return;
-            }
-            this.normal();
             return;
         }
-        if(!teclaPressionada){
-            this.normal();
-        }
+        
+        this.normal();
     }
     
     @Override
@@ -76,7 +110,7 @@ public class Jogador extends Personagem{
         
         try {
             this.imgPersonagem = new Sprite("resources/personagem/jogador/jogador.png", 0, 0, 37, 94);
-            this.imgBarra    = new BarraStatus(370, 30, this.tipoPersonagem);
+            this.imgBarra      = new BarraStatus(370, 30, this.tipoPersonagem);
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
@@ -84,18 +118,28 @@ public class Jogador extends Personagem{
         this.forca = 50;
         this.inteligencia = 70;
         
-        this.x = 700;
-        this.y = 400;
+        this.xInicial = 753;
+        this.yInicial = 500;
+        
+        this.x = 790;
+        this.y = 500;
         
         this.normal();
     }
     
     public void step(long timeEllapsed){
-        super.step(timeEllapsed);
         
         this.tiro.step(timeEllapsed);
         
         this.verificaColisaoParede();
+        
+        if(this.acao == EnumAcao.APANHA){
+            this.novoImpacto();
+        }
+        
+        this.impacto.step(timeEllapsed);
+        
+        super.step(timeEllapsed);
     }
     
     @Override
@@ -106,6 +150,7 @@ public class Jogador extends Personagem{
         this.imgBarra.setStatus(this.hp, this.sp);
         this.imgBarra.drawFlipped(g);
         this.tiro.drawFlipped(g);
+        this.impacto.draw(g);
     }
 
     @Override

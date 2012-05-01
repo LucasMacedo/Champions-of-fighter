@@ -12,6 +12,9 @@ public abstract class ObjetoComGravidade extends GameObject {
     protected int xAnterior;
     protected int yAnterior;
     
+    protected int widthAnterior;
+    protected int heightAnterior;
+    
     public int getXAnterior(){
         return this.xAnterior;
     }
@@ -59,6 +62,10 @@ public abstract class ObjetoComGravidade extends GameObject {
         return (this.yVelocidade < 0);
     }
 
+    public int getVelocidade(){
+        return this.yVelocidade;
+    }
+    
     public boolean estaSubindo() {
         return (this.yVelocidade > 0);
     }

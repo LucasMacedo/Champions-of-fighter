@@ -7,12 +7,14 @@ package javaPlay;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  * @author VisionLab/PUC-Rio
  */
-public class Sprite 
-{    
+public class Sprite{    
     private Image image;
     private int animFrameCount;
     
@@ -21,6 +23,9 @@ public class Sprite
     
     private int animFrameWidth;
     private int animFrameHeight;
+    
+    private int x = 0;
+    private int y = 0;
     
     private int MAX_COUNT = 50;
 
@@ -82,8 +87,19 @@ public class Sprite
         this.animFrameHeight = height;
     }
     
+    public int getX(){
+        return this.x;
+    }
+    
+    public int getY(){
+        return this.y;
+    }
+    
     public void draw(Graphics g, int x, int y)
     {
+        this.x = x;
+        this.y = y;
+        
         GameCanvas canvas = GameEngine.getInstance().getGameCanvas();
 
         //int xpos = canvas.getRenderScreenStartX() + x;
@@ -108,6 +124,9 @@ public class Sprite
     
     public void draw(Graphics g, int x, int y, int width, int height)
     {
+        this.x = x;
+        this.y = y;
+        
         GameCanvas canvas = GameEngine.getInstance().getGameCanvas();
 
         //int xpos = canvas.getRenderScreenStartX() + x;
@@ -131,6 +150,9 @@ public class Sprite
     }   
     
     public void drawFlipped(Graphics g, int x, int y) {
+        this.x = x;
+        this.y = y;
+        
         x -= (animFrameWidth/2);
         g.drawImage(image, 
                     (animFrameWidth)/4 + x, y, 

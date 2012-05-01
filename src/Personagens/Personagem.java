@@ -1,5 +1,6 @@
 package Personagens;
 
+import com.sun.org.glassfish.gmbal.Impact;
 import java.awt.Rectangle;
 import java.util.Random;
 import javaPlay.Imagem;
@@ -8,12 +9,20 @@ import javaPlayExtras.AudioPlayer;
 import javaPlayExtras.BarraStatus;
 import javaPlayExtras.EnumAcao;
 import javaPlayExtras.EnumPersonagem;
+import javaPlayExtras.Impacto;
 import javaPlayExtras.ObjetoComGravidade;
+import javaPlayExtras.Som;
 import javaPlayExtras.Tiro;
 import javax.swing.JOptionPane;
 
 public abstract class Personagem extends ObjetoComGravidade{
     protected Sprite imgPersonagem;
+    protected Impacto impacto;
+    
+    protected int xInicial;
+    protected int yInicial;
+    
+    protected Som som;
     
     protected EnumPersonagem tipoPersonagem;
     
@@ -25,7 +34,7 @@ public abstract class Personagem extends ObjetoComGravidade{
     
     protected long timeEllapsed = 0;
     
-    protected int forcaImpulso;
+    protected int forcaImpulso = 38;
     protected int cont = 0;
     
     protected int vezesMorto = 0;
@@ -51,8 +60,18 @@ public abstract class Personagem extends ObjetoComGravidade{
     protected void load(){
         this.forcaImpulso = 38;
         this.tiro = new Tiro();
+        this.impacto = new Impacto();
         this.hp = 144;
         this.sp = 87;
+        //this.mudaImagem();
+    }
+    
+    public int getVezesMorto(){
+        return this.vezesMorto;
+    }
+    
+    public void setVezesMorto(){
+        this.vezesMorto ++;
     }
     
     public void step(long timeEllaped){
@@ -71,6 +90,7 @@ public abstract class Personagem extends ObjetoComGravidade{
         
         if(this.estaMorto()){
             this.morre();
+            this.sp = 0;
             return;
         }
         
@@ -79,8 +99,20 @@ public abstract class Personagem extends ObjetoComGravidade{
     }
     
     private void mudaImagem(){
+        this.widthAnterior  = this.getWidth();
+        this.heightAnterior = this.getHeight();
+        
         this.setHeight( this.imgPersonagem.getHeight() );
-        this.setWidth( this.imgPersonagem.getWidth() );
+        this.setWidth ( this.imgPersonagem.getWidth() );
+        
+        if(this.tipoPersonagem == EnumPersonagem.JOGADOR/* && this.acao != EnumAcao.APANHA*/){
+            if(this.getWidth() < this.widthAnterior){
+                this.x -= (this.getWidth() - this.widthAnterior);
+            }
+            if(this.getWidth() > this.widthAnterior){
+                this.x += this.widthAnterior - this.getWidth();
+            }
+        }
     }
     
     public void apanha(double apanha){
@@ -96,20 +128,61 @@ public abstract class Personagem extends ObjetoComGravidade{
         }
         
         this.acao = EnumAcao.APANHA;
-        this.mudaImagem();
         this.animacaoApanha();
-        
+        this.mudaImagem();
         
         if(this.estaMorto()){
             this.vezesMorto ++;
-            //AudioPlayer.play("resources/som/apanha.wav", true);
+            this.morre();
             return;
         }
-        //AudioPlayer.play("resources/som/apanha.wav", true);
     }
     
     public void revive(){
-        this.load();
+        System.out.println(this.acao);
+        this.animacaoNormal();
+        
+        if( !this.estaNoChao ){
+            this.y += 70;
+        }
+        
+        if(this.y < 0){
+            this.y = yInicial;
+        }
+        
+        if(this.tipoPersonagem == EnumPersonagem.JOGADOR){
+            if(this.x < this.xInicial){
+                this.x += 10;
+            }
+            if(this.x > this.xInicial){
+                this.x = this.xInicial;
+            }
+        }else{
+            if(this.x > this.xInicial){
+                this.x -= 10;
+            }
+            if(this.x < this.xInicial){
+                this.x = this.xInicial;
+            }
+        }
+        
+        this.hp += 10;
+        this.sp += 5;
+        
+        if(this.hp > 144){
+            this.hp = 144;
+        }
+        if(this.sp > 87){
+            this.sp = 87;
+        }
+        
+        if(this.x == this.xInicial && this.hp == 144 && this.sp == 87){
+            this.acao = EnumAcao.NORMAL;
+        }
+    }
+    
+    public boolean reviveu(){
+        return (this.x == this.xInicial && this.hp == 144 && this.sp == 87);
     }
     
     public void bate(){
@@ -120,24 +193,27 @@ public abstract class Personagem extends ObjetoComGravidade{
         this.acao = EnumAcao.BATE;
         
         this.animacaoBate();
+        this.mudaImagem();
     }
     
     private void morre(){
-        this.mudaImagem();
         this.acao = EnumAcao.MORTO;
-        if(this.vezesMorto == 2){
+        //if(this.vezesMorto == 2){
             this.animacaoMorre();
-        }
+        //o}
+        this.mudaImagem();
     }
     
     public void pula(){
-        if( this.estaSubindo() || this.estaDescendo() ){
+        
+        if( this.estaSubindo() || this.estaDescendo()){
             return;
         }
         
         this.impulso(this.forcaImpulso);
         this.animacaoPula();
         this.acao = EnumAcao.PULA;
+        this.mudaImagem();
     }
     
     public void especial(){
@@ -158,29 +234,31 @@ public abstract class Personagem extends ObjetoComGravidade{
                 this.cont = 0;
             }
         }
+        this.mudaImagem();
     }
     
     public void andaFrente(){
         this.x += 8;
         this.animacaoAnda();
         this.acao = EnumAcao.ANDAFRENTE;
+        this.mudaImagem();
     }
     
     public void andaTras(){
         this.x -= 8;
         this.animacaoAnda();
         this.acao = EnumAcao.ANDATRAZ;
+        this.mudaImagem();
     }
     
     public void normal(){
         this.animacaoNormal();
-        this.mudaImagem();
         this.acao = EnumAcao.NORMAL;
+        this.mudaImagem();
     }
     
     public void pausaJogo(boolean pausa){
         this.jogoPausado = pausa;
-        this.chegouChao();
     }
     
     public boolean getPausaJogo(){
@@ -253,13 +331,16 @@ public abstract class Personagem extends ObjetoComGravidade{
     
     public Rectangle getRectangleMenor(){
         if(this.tipoPersonagem == EnumPersonagem.JOGADOR){
-            return new Rectangle(this.x-5, y, width-5, height);
+            return new Rectangle(this.x-2, y, width-2, height);
         }
-        return new Rectangle(this.x+5, y, width+5, height);
+        return new Rectangle(this.x+2, y, width+2, height);
     }
     
     public boolean colisaoPersonagem(Rectangle rec){
         return this.getRectangleMenor().intersects(rec);
     }
     
+    public void novoImpacto(){
+        this.impacto = new Impacto(this.x, this.y, this.width, this.height, this.tipoPersonagem);
+    }
 }

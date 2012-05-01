@@ -10,24 +10,22 @@ import javaPlay.GameStateController;
 import javaPlay.Imagem;
 import javaPlay.Sprite;
 import javaPlayExtras.AudioPlayer;
+import javaPlayExtras.Rank;
 import javax.swing.JOptionPane;
 
 public class CentralDeBatalha implements GameStateController{
-    private ArrayList<EnumPersonagem> listaClassificacao;
-    
-    private Sprite imgRank;
     private Cenario cenario;
     
+    private Rank rank;
+    
     public CentralDeBatalha() {
-        this.listaClassificacao = new ArrayList<EnumPersonagem>();
+        this.rank = new Rank();
         this.cenario = new Cenario();
         
         this.load();
         
-        Collections.shuffle(this.listaClassificacao);
-        Collections.shuffle(this.listaClassificacao);
-        
-        this.configCenario(EnumPersonagem.MARIO);
+        //this.configCenario(EnumPersonagem.NARUTO);
+        this.configCenario(this.rank.getRivalSemi());
     }
     
     public Cenario getCenario(){
@@ -38,29 +36,20 @@ public class CentralDeBatalha implements GameStateController{
         this.cenario.setInimigo(inimigo);
     }
     
+    public Rank getRank(){
+        return this.rank;
+    }
+    
     @Override
     public void step(long timeElapsed) {
         
     }
 
     @Override
-    public void draw(Graphics g) {
-        this.imgRank.draw(g, 0, 2);
-    }
+    public void draw(Graphics g) {}
     
     @Override
-    public void load() {
-        try{
-            this.imgRank = new Sprite("resources/cenario/cenario.jpg", 6, 0, 800, 600);
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Erro ao carregar a imagem de fundo: "+e);
-        }
-        
-        this.listaClassificacao.add(EnumPersonagem.MARIO);
-        this.listaClassificacao.add(EnumPersonagem.NARUTO);
-        this.listaClassificacao.add(EnumPersonagem.ICHIGO);
-        this.listaClassificacao.add(EnumPersonagem.JOGADOR);
-    }
+    public void load(){}
     @Override
     public void unload() {}
     @Override

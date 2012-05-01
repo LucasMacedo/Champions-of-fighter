@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 public class Tiro extends GameObject{
     private long timeElapsed;
     
+    private int velocidade = 25;
+    
     private boolean existeTiro;
     private boolean existeColisao;
     private Imagem tiro;
@@ -31,41 +33,46 @@ public class Tiro extends GameObject{
         this.iniciaTiro();
     }
     
-    public Tiro(int posicaoX, int posicaoY, int width, int height, EnumPersonagem personagem){
-        if(personagem == EnumPersonagem.PERSONAGEM){
+    public Tiro(int posicaoX, int posicaoY, int width, int height, EnumPersonagem personagem){        
+        this.personagem = personagem;
+        this.existeTiro = true;
+        
+        this.iniciaTiro();
+        
+        if(personagem == EnumPersonagem.JOGADOR){
             this.x = posicaoX-25;
         }else{
             this.x = posicaoX+width;
         }
-        this.y = posicaoY+((height/2)/2);
         
-        this.personagem = personagem;
-        
-        this.existeTiro = true;
-        
-        this.iniciaTiro();
+        this.y = (height/2)+posicaoY-(this.height/2);
     }
     
     private void iniciaTiro(){
         try {
             switch(this.personagem){
                 case JOGADOR:
-                    this.tiro = new Imagem("resources/personagem/especial.png");
+                    this.tiro = new Imagem("resources/personagem/jogador/especial.png");
+                    this.velocidade = 30;
                     break;
                 case MARIO:
                     this.tiro = new Imagem("resources/personagem/inimigo/tiroMario.gif");
+                    this.velocidade = 40;
                     break;
                 case CHEFAO:
-                    this.tiro = new Imagem("resources/personagem/especial.png");
+                    this.tiro = new Imagem("resources/personagem/inimigo/tiroChefao.png");
+                    this.velocidade = 40;
                     break;
                 case ICHIGO:
-                    this.tiro = new Imagem("resources/personagem/especial.png");
+                    this.tiro = new Imagem("resources/personagem/inimigo/tiroIchigo.png");
+                    this.velocidade = 40;
                     break;
                 case NARUTO:
-                    this.tiro = new Imagem("resources/personagem/especial.png");
+                    this.tiro = new Imagem("resources/personagem/inimigo/tiroNaruto.gif");
+                    this.velocidade = 40;
                     break;
                 default: 
-                    this.tiro = new Imagem("resources/personagem/especial.png");
+                    this.tiro = new Imagem("resources/personagem/jogador/especial.png");
                     break;
             }
         } catch (Exception e) {
@@ -85,8 +92,8 @@ public class Tiro extends GameObject{
     }
     
     private void fimTiro(){
-        this.x = 250;
-        this.y = 250;
+        this.x = -350;
+        this.y = -350;
         
         this.existeTiro = false;
     }
@@ -96,6 +103,9 @@ public class Tiro extends GameObject{
     }
     
     public boolean existeColisao(){
+        if(this.existeColisao){
+            this.fimTiro();
+        }
         return this.existeColisao;
     }
     
@@ -105,9 +115,9 @@ public class Tiro extends GameObject{
         
         if(this.existeTiro){
             if(this.personagem == EnumPersonagem.JOGADOR){
-                this.x -= 15;
+                this.x -= this.velocidade;
             }else{
-                this.x += 15;
+                this.x += this.velocidade;
             }
         
             if(this.existeColisao){
@@ -125,13 +135,16 @@ public class Tiro extends GameObject{
     @Override
     public void draw(Graphics g) {
         this.tiro.draw(g, this.x, this.y);
+        g.drawRect(this.x, this.y, this.getWidth(), this.getHeight());
     }
     
     public void drawUPPER(Graphics g, double aumenta){
         this.tiro.drawUPPER(g, this.x, this.y, aumenta);
+        g.drawRect(this.x, this.y, this.getWidth(), this.getHeight());
     }
     
     public void drawFlipped(Graphics g) {
         this.tiro.drawFlipped(g, this.x, this.y);
+        g.drawRect(this.x, this.y, this.getWidth(), this.getHeight());
     }
 }

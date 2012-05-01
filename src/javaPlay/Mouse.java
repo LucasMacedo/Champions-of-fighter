@@ -4,6 +4,7 @@
 
 package javaPlay;
 
+import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -21,7 +22,9 @@ public class Mouse implements MouseMotionListener, MouseListener
 
     public Mouse()
     {
-        mousePos = new Point(0, 0);
+        mousePos = new Point();
+        mousePos = MouseInfo.getPointerInfo().getLocation();
+        
         leftButtonPressed = false;
         middleButtonPressed = false;
         rightButtonPressed = false;

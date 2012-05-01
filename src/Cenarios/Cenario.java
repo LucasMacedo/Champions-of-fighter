@@ -18,18 +18,23 @@ import javaPlayExtras.AudioPlayer;
 import javaPlayExtras.EnumAcao;
 import javaPlayExtras.EnumPersonagem;
 import javaPlayExtras.ObjetoComGravidade;
+import javaPlayExtras.Som;
 import javax.swing.JOptionPane;
 
 public class Cenario implements GameStateController{
     private GeraCenario cenarioComParede;
+    
+    private boolean contaRound;
     
     private Sprite imgCenario;
     private Sprite tempo1;
     private Sprite tempo2;
     
     private long timeElapsed;
-    private int minuto = 50;
+    private int minuto = 5;
     private int round = 1;
+    
+    private Som som;
     
     private Jogador jogador;
     private Inimigo inimigo;
@@ -44,7 +49,6 @@ public class Cenario implements GameStateController{
         }
         
         this.cenarioComParede = new GeraCenario();
-        this.load();
         
         this.jogador = new Jogador();
         this.setInimigo(EnumPersonagem.MARIO);
@@ -59,7 +63,7 @@ public class Cenario implements GameStateController{
         if(obj1.noChao()){
             this.jogador.chegouChao();
         }
-        
+        System.out.println(this.jogador.getVelocidade());
         this.inimigo.setX(obj2.getX());
         this.inimigo.setY(obj2.getY());
         if(obj2.noChao()){
@@ -70,12 +74,10 @@ public class Cenario implements GameStateController{
         this.inimigo.colisaoTiro(this.jogador);
         if(this.inimigo.existeColisaoTiro()){
             this.jogador.apanha(this.inimigo.getForcaTiro());
-           
         }
         this.jogador.colisaoTiro(this.inimigo);
         if(this.jogador.existeColisaoTiro()){
             this.inimigo.apanha(this.jogador.getForcaTiro());
-           
         }
         // Colisao Bate
         if(this.jogador.getAcao() == EnumAcao.BATE){
@@ -122,25 +124,25 @@ public class Cenario implements GameStateController{
                 this.inimigo = new Mario();
                 this.imgCenario.setCurrAnimFrameWidth(0);
                 
-                //AudioPlayer.play("resources/audio/cenario/mario.wav", true);
+                //this.som = new Som("", true);
                 break;
             case NARUTO:
                 this.inimigo = new Naruto();
                 this.imgCenario.setCurrAnimFrameWidth(3);
                 
-                //AudioPlayer.play("resources/audio/cenario/naruto.wav", true);
+                //this.som = new Som("", true);
                 break;
             case ICHIGO:
                 this.inimigo = new Ichigo();
                 this.imgCenario.setCurrAnimFrameWidth(2);
                 
-                //AudioPlayer.play("resources/audio/cenario/ichigo.wav", true);
+                //this.som = new Som("", true);
                 break;
             case CHEFAO:
                 this.inimigo = new Chefao();
                 this.imgCenario.setCurrAnimFrameWidth(1);
                 
-                //AudioPlayer.play("resources/audio/cenario/chefao.wav", true);
+                //this.som = new Som("", true);
                 break;
         }
     }
@@ -151,23 +153,59 @@ public class Cenario implements GameStateController{
         this.inimigo.step(timeElapsed);
         
         this.timeElapsed += timeElapsed;
-        if(this.timeElapsed >= 1000){
+        
+        if(this.timeElapsed >= 900){
             this.minuto --;
-            this.timeElapsed = 0;
         }
         
         if(this.minuto < 0){
             this.jogador.pausaJogo(true);
             this.inimigo.pausaJogo(true);
             
-            this.minuto = 50;
+            this.minuto = 0;
+            this.timeElapsed -= 100;
+            
+            if( ( this.jogador.reviveu() && this.inimigo.reviveu() ) ){
+                this.minuto = 5;
+                
+                this.jogador.pausaJogo(false);
+                this.inimigo.pausaJogo(false);
+                
+                this.contaRound = false;
+            }else{
+                this.jogador.revive();
+                this.inimigo.revive();
+            }
+            
+            if(!this.contaRound){
+                if( this.jogador.getHP() > this.inimigo.getHP() ){
+                    this.inimigo.setVezesMorto();
+                    
+                    this.contaRound = true;
+                }
+                if( this.jogador.getHP() < this.inimigo.getHP() ){
+                    this.jogador.setVezesMorto();
+                    
+                    this.contaRound = true;
+                }
+                this.inimigo.setAcao(EnumAcao.MORTO);
+                this.jogador.setAcao(EnumAcao.MORTO);
+            }
+        }
+        
+        if(this.timeElapsed >= 900){
+            this.timeElapsed = 0;
+        }
+        
+        if(this.minuto < 0){
+            this.minuto = 0;
         }
         
         this.verificaColisao(timeElapsed);
         
         String minuto = this.minuto+"";
         if(this.minuto < 10){
-            minuto = "0"+minuto;
+            minuto = "0"+this.minuto;
         }
         
         this.tempo1.setCurrAnimFrameWidth(Integer.parseInt((minuto).substring(0, 1)));
