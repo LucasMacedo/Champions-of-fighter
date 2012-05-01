@@ -91,7 +91,7 @@ public class MenuModoGame implements GameStateController{
         
         if(rect.contains(point)){
             if(tipo.equals("imgTorneio")){
-                GameEngine.getInstance().setNextGameStateController(3);
+                GameEngine.getInstance().setNextGameStateController(4);
             }
             if(tipo.equals("imgVersus")){
                 System.out.println("imgVersus");

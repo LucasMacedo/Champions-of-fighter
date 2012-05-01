@@ -3,7 +3,6 @@ package Principal;
 import Cenarios.MenuCreditos;
 import Cenarios.MenuPrincipal;
 import Cenarios.MenuModoGame;
-import Cenarios.CentralDeBatalha;
 import javaPlay.GameEngine;
 import javaPlay.Imagem;
 import javaPlayExtras.IniciaImagens;
@@ -20,7 +19,7 @@ public class Main{
         
         new IniciaImagens();
         
-        GameEngine.getInstance().setStartingGameStateController(5);
+        GameEngine.getInstance().setStartingGameStateController(1);
         
         GameEngine.getInstance().setFramesPerSecond(30);
         GameEngine.getInstance().run();

@@ -1,4 +1,4 @@
-package javaPlayExtras;
+package Cenarios;
 
 import java.awt.Graphics;
 import java.awt.Point;
@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javaPlay.GameEngine;
 import javaPlay.GameStateController;
+import javaPlay.Keys;
+import javaPlay.Keyboard;
 import javaPlay.Mouse;
 import javaPlay.Sprite;
+import javaPlayExtras.EnumPersonagem;
 import javaPlayExtras.EnumPersonagem;
 
 public class Rank implements GameStateController{
@@ -129,17 +132,11 @@ public class Rank implements GameStateController{
     
     @Override
     public void step(long timeElapsed) {
-        Mouse mouse = GameEngine.getInstance().getMouse();
+        Keyboard key = GameEngine.getInstance().getKeyboard();
         this.verifica();
         
-        System.out.println(this.timeElapsed);
-        this.timeElapsed += timeElapsed;
-        if(!(this.timeElapsed > 500)){
-            return;
-        }
-        
-        if(mouse.isLeftButtonPressed()){
-            GameEngine.getInstance().setNextGameStateController(4);
+        if(key.keyDown(Keys.ENTER) || key.keyDown(Keys.ESPACO)){
+            GameEngine.getInstance().setNextGameStateController(5);
         }
     }
 

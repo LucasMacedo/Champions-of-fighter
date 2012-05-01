@@ -107,8 +107,8 @@ public class Inimigo extends Personagem{
         this.x = 10;
         this.y = 500;
         
-        this.inteligencia = 70;
-        this.forca = 50;
+        this.inteligencia = 40;
+        this.forca = 30;
     }
     
     public void step(long timeEllapsed){

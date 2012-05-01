@@ -11,6 +11,7 @@ import Personagens.Mario;
 import Personagens.Naruto;
 import java.awt.Color;
 import java.awt.Graphics;
+import javaPlay.GameEngine;
 import javaPlay.GameStateController;
 import javaPlay.Imagem;
 import javaPlay.Sprite;
@@ -29,10 +30,13 @@ public class Cenario implements GameStateController{
     private Sprite imgCenario;
     private Sprite tempo1;
     private Sprite tempo2;
+    private Sprite rounds;
     
     private long timeElapsed;
-    private int minuto = 5;
+    private int minuto = 50;
     private int round = 1;
+    
+    private int contTempoRounds;
     
     private Som som;
     
@@ -44,12 +48,15 @@ public class Cenario implements GameStateController{
             this.imgCenario = new Sprite("resources/cenario/cenario.jpg", 0, 0, 800, 600);
             this.tempo1     = new Sprite("resources/cenario/tempo.png", 0, 0, 10, 16);
             this.tempo2     = new Sprite("resources/cenario/tempo.png", 0, 0, 10, 16);
+            
+            this.rounds     = new Sprite("resources/cenario/rounds.png",2, 0, 384, 77);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
         
         this.cenarioComParede = new GeraCenario();
         
+        this.contTempoRounds = 0;
         this.jogador = new Jogador();
         this.setInimigo(EnumPersonagem.MARIO);
     }
@@ -63,7 +70,6 @@ public class Cenario implements GameStateController{
         if(obj1.noChao()){
             this.jogador.chegouChao();
         }
-        System.out.println(this.jogador.getVelocidade());
         this.inimigo.setX(obj2.getX());
         this.inimigo.setY(obj2.getY());
         if(obj2.noChao()){
@@ -154,11 +160,37 @@ public class Cenario implements GameStateController{
         
         this.timeElapsed += timeElapsed;
         
-        if(this.timeElapsed >= 900){
+        if(this.timeElapsed >= 900 && !this.inimigo.estaMorto() && !this.jogador.estaMorto()){
             this.minuto --;
         }
         
-        if(this.minuto < 0){
+        if(this.timeElapsed >= 900){
+            if(this.jogador.getVezesMorto() >= 2 || this.inimigo.getVezesMorto() >= 2){
+                this.contTempoRounds ++;
+                
+                this.jogador.acabaJogo();
+                this.inimigo.acabaJogo();
+                
+                if(this.contTempoRounds >= 50){
+                    if(this.jogador.getVezesMorto() >= 2){
+                        GameEngine.getInstance().setNextGameStateController(1);
+                    }else{
+                        GameEngine.getInstance().setNextGameStateController(4);
+                    }
+                }
+            }
+        }
+        
+        if(this.timeElapsed >= 300){
+            this.rounds.setCurrAnimFrameHeight(2);
+        }
+        
+        System.out.println("Jogador: "+this.jogador.getVezesMorto()+" Inimigo: "+this.inimigo.getVezesMorto());
+        if(this.jogador.getVezesMorto() >= 2){
+            this.rounds.setCurrAnimFrameHeight(0);
+        }
+        
+        if(this.minuto < 0 || this.jogador.estaMorto() || this.inimigo.estaMorto()){
             this.jogador.pausaJogo(true);
             this.inimigo.pausaJogo(true);
             
@@ -166,12 +198,14 @@ public class Cenario implements GameStateController{
             this.timeElapsed -= 100;
             
             if( ( this.jogador.reviveu() && this.inimigo.reviveu() ) ){
-                this.minuto = 5;
+                this.minuto = 50;
                 
                 this.jogador.pausaJogo(false);
                 this.inimigo.pausaJogo(false);
                 
                 this.contaRound = false;
+                
+                this.rounds.setCurrAnimFrameHeight(1);
             }else{
                 this.jogador.revive();
                 this.inimigo.revive();
@@ -210,7 +244,6 @@ public class Cenario implements GameStateController{
         
         this.tempo1.setCurrAnimFrameWidth(Integer.parseInt((minuto).substring(0, 1)));
         this.tempo2.setCurrAnimFrameWidth(Integer.parseInt((minuto).substring(1, 2)));
-        
     }
     
     @Override
@@ -223,6 +256,8 @@ public class Cenario implements GameStateController{
         
         this.tempo1.draw(g, 390, 50);
         this.tempo2.draw(g, 402, 50);
+        
+        this.rounds.draw(g, 220, 200);
     }
     
     @Override

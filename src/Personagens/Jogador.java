@@ -115,8 +115,8 @@ public class Jogador extends Personagem{
             //JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
         
-        this.forca = 50;
-        this.inteligencia = 70;
+        this.forca = 40;
+        this.inteligencia = 50;
         
         this.xInicial = 753;
         this.yInicial = 500;

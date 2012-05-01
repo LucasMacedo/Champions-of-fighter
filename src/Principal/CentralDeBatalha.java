@@ -1,6 +1,8 @@
 
-package Cenarios;
+package Principal;
 
+import Cenarios.Cenario;
+import Cenarios.Rank;
 import Personagens.Inimigo;
 import javaPlayExtras.EnumPersonagem;
 import java.awt.Graphics;
@@ -10,7 +12,6 @@ import javaPlay.GameStateController;
 import javaPlay.Imagem;
 import javaPlay.Sprite;
 import javaPlayExtras.AudioPlayer;
-import javaPlayExtras.Rank;
 import javax.swing.JOptionPane;
 
 public class CentralDeBatalha implements GameStateController{

@@ -48,6 +48,8 @@ public abstract class Personagem extends ObjetoComGravidade{
     
     protected EnumAcao acao = EnumAcao.NORMAL;
     
+    private boolean acabaJogo;
+    
     protected abstract void eventosTeclado();
     protected abstract void animacaoNormal();
     protected abstract void animacaoPula();
@@ -138,7 +140,19 @@ public abstract class Personagem extends ObjetoComGravidade{
         }
     }
     
+    public void acabaJogo(){
+        this.acabaJogo = true;
+    }
+    
+    public boolean getAcabaJogo(){
+        return this.acabaJogo;
+    }
+    
     public void revive(){
+        if(this.getAcabaJogo()){
+            return;
+        }
+        
         System.out.println(this.acao);
         this.animacaoNormal();
         
