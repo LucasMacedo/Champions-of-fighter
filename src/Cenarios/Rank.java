@@ -13,6 +13,7 @@ import javaPlay.Mouse;
 import javaPlay.Sprite;
 import javaPlayExtras.EnumPersonagem;
 import javaPlayExtras.EnumPersonagem;
+import javaPlayExtras.Som;
 
 public class Rank implements GameStateController{
     private ArrayList<EnumPersonagem> listaA;
@@ -34,7 +35,10 @@ public class Rank implements GameStateController{
     private Sprite imgAvatarVenced;
     private Sprite imgAvatarVencedGeral;
     
-    public Rank(){
+    private Som som;
+    public Rank(Som som){
+        this.som = som;
+        
         ArrayList<EnumPersonagem> listaClassificacao = new ArrayList<EnumPersonagem>();
         this.listaA = new ArrayList<EnumPersonagem>();
         this.listaB = new ArrayList<EnumPersonagem>();
@@ -128,6 +132,30 @@ public class Rank implements GameStateController{
         if(this.listaB.get(1) == EnumPersonagem.NARUTO){
             this.imgAvatar4.setCurrAnimFrameWidth(4);
         }
+        
+        
+    }
+    
+    public void addFinal(){
+        this.imgAvatarFinalA.setWidth(1);
+        
+        if(this.listaB.get(0) == EnumPersonagem.MARIO){
+            this.imgAvatarFinalA.setWidth(2);
+        }
+        if(this.listaB.get(0) == EnumPersonagem.ICHIGO){
+            this.imgAvatarFinalA.setWidth(3);
+        }
+        if(this.listaB.get(0) == EnumPersonagem.NARUTO){
+            this.imgAvatarFinalA.setWidth(4);
+        }
+    }
+    
+    public void addChefao(){
+        this.imgAvatarVenced.setWidth(1);
+    }
+    
+    public void venceu(){
+        this.imgAvatarVencedGeral.setWidth(1);
     }
     
     @Override
@@ -136,6 +164,7 @@ public class Rank implements GameStateController{
         this.verifica();
         
         if(key.keyDown(Keys.ENTER) || key.keyDown(Keys.ESPACO)){
+            this.som.stop();
             GameEngine.getInstance().setNextGameStateController(5);
         }
     }

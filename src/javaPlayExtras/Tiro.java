@@ -25,8 +25,8 @@ public class Tiro extends GameObject{
         this.height = 0;
         this.width = 0;
         
-        this.x = -300;
-        this.y = -300;
+        this.x = 1300;
+        this.y = 1300;
         
         this.personagem = EnumPersonagem.PERSONAGEM;
         
@@ -92,8 +92,8 @@ public class Tiro extends GameObject{
     }
     
     private void fimTiro(){
-        this.x = -350;
-        this.y = -350;
+        this.x = 1350;
+        this.y = 1350;
         
         this.existeTiro = false;
     }
@@ -135,16 +135,16 @@ public class Tiro extends GameObject{
     @Override
     public void draw(Graphics g) {
         this.tiro.draw(g, this.x, this.y);
-        g.drawRect(this.x, this.y, this.getWidth(), this.getHeight());
+        //g.drawRect(this.x, this.y, this.getWidth(), this.getHeight());
     }
     
     public void drawUPPER(Graphics g, double aumenta){
         this.tiro.drawUPPER(g, this.x, this.y, aumenta);
-        g.drawRect(this.x, this.y, this.getWidth(), this.getHeight());
+        //g.drawRect(this.x, this.y, this.getWidth(), this.getHeight());
     }
     
     public void drawFlipped(Graphics g) {
         this.tiro.drawFlipped(g, this.x, this.y);
-        g.drawRect(this.x, this.y, this.getWidth(), this.getHeight());
+        //g.drawRect(this.x, this.y, this.getWidth(), this.getHeight());
     }
 }

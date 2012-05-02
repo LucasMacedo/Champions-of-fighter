@@ -1,11 +1,8 @@
 package javaPlayExtras;
 
 import java.awt.Graphics;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javaPlay.GameObject;
 import javaPlay.Imagem;
-import javaPlay.Sprite;
 
 public class Impacto extends GameObject{
     private Imagem imgImpacto;

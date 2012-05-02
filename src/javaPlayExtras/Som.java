@@ -47,6 +47,7 @@ public class Som{
         if (loop) {
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         }
+        this.stop();
     }
     
     public void play() {

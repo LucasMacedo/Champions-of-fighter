@@ -1,7 +1,5 @@
 package Personagens;
 
-import java.awt.Graphics;
-import javaPlay.Imagem;
 import javaPlay.Sprite;
 import javaPlayExtras.BarraStatus;
 import javaPlayExtras.EnumPersonagem;
@@ -9,8 +7,8 @@ import javax.swing.JOptionPane;
 
 public class Chefao extends Inimigo{
     public Chefao(){
-        this.load();
         super.load();
+        this.load();
     }
     
     public void load(){
@@ -23,8 +21,9 @@ public class Chefao extends Inimigo{
             JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
         
-        this.x = 700;
-        this.y = 400;
+        this.x += 15;
+        this.forca = 60;
+        this.inteligencia = 65;
     }
     
     

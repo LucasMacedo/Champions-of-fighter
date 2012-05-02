@@ -1,9 +1,6 @@
 package Personagens;
 
-import com.sun.org.glassfish.gmbal.Impact;
 import java.awt.Rectangle;
-import java.util.Random;
-import javaPlay.Imagem;
 import javaPlay.Sprite;
 import javaPlayExtras.AudioPlayer;
 import javaPlayExtras.BarraStatus;
@@ -13,7 +10,6 @@ import javaPlayExtras.Impacto;
 import javaPlayExtras.ObjetoComGravidade;
 import javaPlayExtras.Som;
 import javaPlayExtras.Tiro;
-import javax.swing.JOptionPane;
 
 public abstract class Personagem extends ObjetoComGravidade{
     protected Sprite imgPersonagem;
@@ -27,6 +23,8 @@ public abstract class Personagem extends ObjetoComGravidade{
     protected EnumPersonagem tipoPersonagem;
     
     protected Tiro tiro;
+    protected Tiro tiro2;
+    
     protected BarraStatus imgBarra;
     
     protected double forca = 25;
@@ -97,10 +95,9 @@ public abstract class Personagem extends ObjetoComGravidade{
         }
         
         this.eventosTeclado();
-        
     }
     
-    private void mudaImagem(){
+    protected void mudaImagem(){
         this.widthAnterior  = this.getWidth();
         this.heightAnterior = this.getHeight();
         
@@ -124,17 +121,18 @@ public abstract class Personagem extends ObjetoComGravidade{
         this.hp -= apanha;
         
         if(this.tipoPersonagem == EnumPersonagem.JOGADOR){
-            this.x += ((int)apanha)*3;
+            this.x += ((int)apanha)*50;
         }else{
-            this.x -= ((int)apanha)*3;
+            this.x -= ((int)apanha)*50;
         }
         
         this.acao = EnumAcao.APANHA;
         this.animacaoApanha();
         this.mudaImagem();
         
+        AudioPlayer.play("resources/audio/personagem/apanha.wav");
+        
         if(this.estaMorto()){
-            this.vezesMorto ++;
             this.morre();
             return;
         }
@@ -153,16 +151,8 @@ public abstract class Personagem extends ObjetoComGravidade{
             return;
         }
         
-        System.out.println(this.acao);
         this.animacaoNormal();
-        
-        if( !this.estaNoChao ){
-            this.y += 70;
-        }
-        
-        if(this.y < 0){
-            this.y = yInicial;
-        }
+        this.mudaImagem();
         
         if(this.tipoPersonagem == EnumPersonagem.JOGADOR){
             if(this.x < this.xInicial){
@@ -191,7 +181,7 @@ public abstract class Personagem extends ObjetoComGravidade{
         }
         
         if(this.x == this.xInicial && this.hp == 144 && this.sp == 87){
-            this.acao = EnumAcao.NORMAL;
+            //this.acao = EnumAcao.NORMAL;
         }
     }
     
@@ -201,7 +191,6 @@ public abstract class Personagem extends ObjetoComGravidade{
     
     public void bate(){
         if(this.acao == EnumAcao.APANHA){
-            this.normal();
             return;
         }
         this.acao = EnumAcao.BATE;
@@ -212,9 +201,8 @@ public abstract class Personagem extends ObjetoComGravidade{
     
     private void morre(){
         this.acao = EnumAcao.MORTO;
-        //if(this.vezesMorto == 2){
-            this.animacaoMorre();
-        //o}
+        
+        this.animacaoMorre();
         this.mudaImagem();
     }
     
@@ -240,7 +228,12 @@ public abstract class Personagem extends ObjetoComGravidade{
             this.acao = EnumAcao.ESPECIAL;
             this.animacaoEspecial();
             this.tiro = new Tiro(this.x, this.y, this.width, this.height, this.tipoPersonagem);
-            this.sp -= 20;
+            AudioPlayer.play("resources/audio/personagem/especial.wav");
+            if(this.tipoPersonagem != EnumPersonagem.JOGADOR){
+                this.sp -= 13;
+            }else{
+                this.sp -= 20;
+            }
         }else{
             this.cont ++;
             if(this.cont >= 12){
@@ -252,14 +245,14 @@ public abstract class Personagem extends ObjetoComGravidade{
     }
     
     public void andaFrente(){
-        this.x += 8;
+        this.x += 9;
         this.animacaoAnda();
         this.acao = EnumAcao.ANDAFRENTE;
         this.mudaImagem();
     }
     
     public void andaTras(){
-        this.x -= 8;
+        this.x -= 9;
         this.animacaoAnda();
         this.acao = EnumAcao.ANDATRAZ;
         this.mudaImagem();
@@ -356,5 +349,9 @@ public abstract class Personagem extends ObjetoComGravidade{
     
     public void novoImpacto(){
         this.impacto = new Impacto(this.x, this.y, this.width, this.height, this.tipoPersonagem);
+    }
+
+    public Tiro getTiro(){
+        return this.tiro;
     }
 }

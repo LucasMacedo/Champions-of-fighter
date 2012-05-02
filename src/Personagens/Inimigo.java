@@ -1,20 +1,79 @@
 package Personagens;
 
-import javaPlayExtras.EnumPersonagem;
 import java.awt.Graphics;
 import javaPlay.GameEngine;
-import javaPlay.Imagem;
 import javaPlay.Keyboard;
 import javaPlay.Keys;
-import javaPlay.Sprite;
-import javaPlayExtras.AudioPlayer;
-import javaPlayExtras.BarraStatus;
 import javaPlayExtras.EnumAcao;
+import javaPlayExtras.EnumPersonagem;
 
 public class Inimigo extends Personagem{
+    private int contRound = 0;
+    private boolean especial;
+    
+    public void eventos(Personagem personagem){
+        if(this.getPausaJogo()){
+            return;
+        }
+        
+        if(this.acao == EnumAcao.APANHA){
+            this.contRound ++;
+        }
+        
+        if(personagem.getTiro().getX() - this.x <= 200 && personagem.getTiro().getX() - this.x > 0){
+            this.pula();
+        }else{
+            this.normal();
+        }
+        
+        if(this.especial){
+            this.especial();
+            this.especial = false;
+            return;
+        }
+        
+        if(this.y + this.height > personagem.getY() + personagem.getHeight()){
+            this.pula();
+            
+            int talvez = (int)((10 - 0)*Math.random());
+            if(talvez == 4){
+                this.especial = true;
+                return;
+            }
+        }
+        
+        if(personagem.getX() - (this.x+this.width) > 200){
+            this.andaFrente();
+            return;
+        }
+        
+        if(personagem.getX() - (this.x+this.width) > 20){
+            this.andaFrente();
+            return;
+        }
+        
+        if(this.x > personagem.getX()-5){
+            this.andaTras();
+            if(this.x > personagem.getX()+personagem.getWidth()){
+                this.x = personagem.getX()-this.width;
+            }
+        }
+        
+        if(this.contRound >= 3 &&personagem.getX() - this.x <= 50){
+            this.especial();
+            this.contRound = 0;
+            return;
+        }
+        
+        this.bate();
+    }
     
     @Override
     protected void eventosTeclado() {
+        if(1 == 1){
+            return;
+        }
+        
         Keyboard key = GameEngine.getInstance().getKeyboard();
         
         // Jogo Pausado
@@ -97,6 +156,10 @@ public class Inimigo extends Personagem{
         this.normal();
     }
     
+    public EnumPersonagem getTipoPersonagem(){
+        return this.tipoPersonagem;
+    }
+    
     @Override
     protected void load() {
         super.load();
@@ -107,8 +170,8 @@ public class Inimigo extends Personagem{
         this.x = 10;
         this.y = 500;
         
-        this.inteligencia = 40;
-        this.forca = 30;
+        this.inteligencia = 55;
+        this.forca = 45;
     }
     
     public void step(long timeEllapsed){
@@ -119,7 +182,6 @@ public class Inimigo extends Personagem{
         
         if(this.acao == EnumAcao.APANHA){
             this.novoImpacto();
-            
         }
         
         this.impacto.step(timeEllapsed);
@@ -131,7 +193,7 @@ public class Inimigo extends Personagem{
     public void draw(Graphics g) {
         this.imgPersonagem.draw(g, this.x, this.y);
         
-        g.drawRect(this.x, this.y, this.imgPersonagem.getWidth(), this.imgPersonagem.getHeight());
+        //g.drawRect(this.x, this.y, this.imgPersonagem.getWidth(), this.imgPersonagem.getHeight());
         this.imgBarra.setStatus(this.hp, this.sp);
         this.imgBarra.draw(g);
         this.impacto.drawFlipped(g);

@@ -11,8 +11,8 @@ import javax.swing.JOptionPane;
 
 public class Mario extends Inimigo{
     public Mario(){
-        this.load();
         super.load();
+        this.load();
     }
     
     public void load(){

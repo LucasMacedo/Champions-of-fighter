@@ -3,30 +3,29 @@ package Principal;
 
 import Cenarios.Cenario;
 import Cenarios.Rank;
-import Personagens.Inimigo;
 import javaPlayExtras.EnumPersonagem;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Collections;
+import javaPlay.GameEngine;
 import javaPlay.GameStateController;
-import javaPlay.Imagem;
-import javaPlay.Sprite;
-import javaPlayExtras.AudioPlayer;
-import javax.swing.JOptionPane;
+import javaPlayExtras.Som;
 
 public class CentralDeBatalha implements GameStateController{
     private Cenario cenario;
-    
+    private Som som;
     private Rank rank;
     
-    public CentralDeBatalha() {
-        this.rank = new Rank();
+    private int contRank = 0;
+    
+    public CentralDeBatalha(Som som) {
+        this.som = som;
+        this.som.play();
+        
+        this.rank = new Rank(this.som);
         this.cenario = new Cenario();
         
         this.load();
-        
-        //this.configCenario(EnumPersonagem.NARUTO);
-        this.configCenario(this.rank.getRivalSemi());
+        this.configCenario(EnumPersonagem.ICHIGO);
+        //this.configCenario(this.rank.getRivalSemi());
     }
     
     public Cenario getCenario(){
@@ -43,7 +42,24 @@ public class CentralDeBatalha implements GameStateController{
     
     @Override
     public void step(long timeElapsed) {
-        
+        if(this.cenario.acabou()){
+            this.contRank ++;
+            this.cenario = new Cenario();
+            if(this.contRank == 1){
+                this.configCenario(this.rank.getRivalFinal());
+                this.rank.addFinal();
+                GameEngine.getInstance().setNextGameStateController(5);
+            }
+            if(this.contRank == 2){
+                this.configCenario(EnumPersonagem.CHEFAO);
+                this.rank.addChefao();
+                GameEngine.getInstance().setNextGameStateController(5);
+            }
+            if(this.contRank == 3){
+                this.rank.venceu();
+                GameEngine.getInstance().setNextGameStateController(6);
+            }
+        }
     }
 
     @Override

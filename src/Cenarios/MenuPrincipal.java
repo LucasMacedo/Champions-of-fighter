@@ -11,6 +11,7 @@ import javaPlay.GameStateController;
 import javaPlay.Imagem;
 import javaPlay.Mouse;
 import javaPlay.Sprite;
+import javaPlayExtras.Som;
 import javax.swing.JOptionPane;
 
 public class MenuPrincipal implements GameStateController{ 
@@ -18,7 +19,9 @@ public class MenuPrincipal implements GameStateController{
     private Sprite imgExit;
     private Sprite FundoMenu;
     
-    public MenuPrincipal(){ 
+    private Som som;
+    
+    public MenuPrincipal(Som som){ 
         try {
             this.imgStartGame = new Sprite("resources/cenario/menu.jpg", 0, 0, 109, 40);
             this.imgExit      = new Sprite("resources/cenario/menu.jpg", 0, 1, 74, 40);
@@ -26,6 +29,8 @@ public class MenuPrincipal implements GameStateController{
           } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar a imagem de fundo: "+e);
         }
+        this.som = som;
+        this.som.play();
     }
     
     @Override
@@ -71,7 +76,7 @@ public class MenuPrincipal implements GameStateController{
         
         if(rect.contains(point)){
             if(tipo.equals("imgStart")){
-                GameEngine.getInstance().setNextGameStateController(2);
+                GameEngine.getInstance().setNextGameStateController(4);
             }
             if(tipo.equals("imgExit")){
                 System.exit(0);

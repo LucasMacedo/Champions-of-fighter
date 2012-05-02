@@ -2,16 +2,12 @@ package Personagens;
 
 import java.awt.Graphics;
 import javaPlay.GameEngine;
-import javaPlay.Imagem;
 import javaPlay.Keyboard;
 import javaPlay.Keys;
 import javaPlay.Sprite;
 import javaPlayExtras.BarraStatus;
 import javaPlayExtras.EnumAcao;
 import javaPlayExtras.EnumPersonagem;
-import javaPlayExtras.Impacto;
-import javaPlayExtras.Tiro;
-import javax.swing.JOptionPane;
 
 public class Jogador extends Personagem{
     
@@ -116,7 +112,7 @@ public class Jogador extends Personagem{
         }
         
         this.forca = 40;
-        this.inteligencia = 50;
+        this.inteligencia = 40;
         
         this.xInicial = 753;
         this.yInicial = 500;
@@ -146,7 +142,7 @@ public class Jogador extends Personagem{
     public void draw(Graphics g) {
         this.imgPersonagem.draw(g, this.x, this.y);
         
-        g.drawRect(this.x, this.y, this.imgPersonagem.getWidth(), this.imgPersonagem.getHeight());
+        //g.drawRect(this.x, this.y, this.imgPersonagem.getWidth(), this.imgPersonagem.getHeight());
         this.imgBarra.setStatus(this.hp, this.sp);
         this.imgBarra.drawFlipped(g);
         this.tiro.drawFlipped(g);
@@ -203,33 +199,13 @@ public class Jogador extends Personagem{
             this.normal();
             return false;
         }
-        /*if(this.timeEllapsed >= 40){
-            if(!this.imgPersonagemVolta){
-                if((this.imgPersonagem.getCurrAnimFrameWidth()+1) <= frames-1){
-                    this.imgPersonagem.setCurrAnimFrameWidth(this.imgPersonagem.getCurrAnimFrameWidth()+1);
-                }else{
-                    this.imgPersonagem.setCurrAnimFrameWidth(this.imgPersonagem.getCurrAnimFrameWidth()-1);
-                    this.imgPersonagemVolta = true;
-                }
-            }
-            
-            
-            if(this.imgPersonagemVolta){
-                if((this.imgPersonagem.getCurrAnimFrameWidth()-1) >= 0){
-                    this.imgPersonagem.setCurrAnimFrameWidth(this.imgPersonagem.getCurrAnimFrameWidth()-1);
-                }else{
-                    this.imgPersonagem.setCurrAnimFrameWidth(this.imgPersonagem.getCurrAnimFrameWidth()+1);
-                    this.imgPersonagemVolta = false;
-                }
-            }
-        }*/
     }
 
     @Override
     protected void animacaoApanha() {
-        this.imgPersonagem.setWidth(79);
+        this.imgPersonagem.setWidth(47);
         
-        this.imgPersonagem.setCurrAnimFrameWidth(1);
+        this.imgPersonagem.setCurrAnimFrameWidth(0);
         this.imgPersonagem.setCurrAnimFrameHeight(3);
     }
 
